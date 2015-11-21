@@ -1,27 +1,28 @@
-<<<<<<< HEAD
-
-     ,-----.,--.                  ,--. ,---.   ,--.,------.  ,------.
-    '  .--./|  | ,---. ,--.,--. ,-|  || o   \  |  ||  .-.  \ |  .---'
-    |  |    |  || .-. ||  ||  |' .-. |`..'  |  |  ||  |  \  :|  `--, 
-    '  '--'\|  |' '-' ''  ''  '\ `-' | .'  /   |  ||  '--'  /|  `---.
-     `-----'`--' `---'  `----'  `---'  `--'    `--'`-------' `------'
-    ----------------------------------------------------------------- 
+# es6
 
 
-Welcome to your Node.js project on Cloud9 IDE!
+### Up and Running 
 
-This chat example showcases how to use `socket.io` with a static `express` server.
+`git clone https://github.com/ProvoJS/es6.git`
 
-## Running the server
+`npm i`
 
-1) Open `server.js` and start the app by clicking on the "Run" button in the top menu.
+### Run Client
 
-2) Alternatively you can launch the app from the Terminal:
+`npm run client`
 
-    $ node server.js
+go to `http://localhost:8080/` in browser
 
-Once the server is running, open the project in the shape of 'https://projectname-username.c9.io/'. As you enter your name, watch the Users list (on the left) update. Once you press Enter or Send, the message is shared with all connected clients.
-=======
-# ebay-scraper
-Group project for CS 360 at Brigham Young University.
->>>>>>> 7ce119ed1eab7dcf53c33770a1c96b78cca5871e
+### Run Server
+
+`npm run server`
+
+go to `http://localhost:3000/` in browser
+
+
+### Additonal Resources
+
+[How to use babel with your tool of choice](https://babeljs.io/docs/setup/)
+
+[Setting up babel (and a react dev environment) with webpack ](https://robots.thoughtbot.com/setting-up-webpack-for-react-and-hot-module-replacement)
+
