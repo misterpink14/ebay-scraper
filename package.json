@@ -10,6 +10,7 @@
     "react-dom": "0.14.1"
   },
   "devDependencies": {
+    "async": "^1.5.0",
     "babel": "5.8.29",
     "babel-core": "5.8.31",
     "babel-loader": "5.3.2",
@@ -30,7 +31,7 @@
     "webpack-dev-server": "1.12.1"
   },
   "scripts": {
-    "client": "webpack-dev-server --inline --content-base public",
+    "client": "webpack-dev-server --inline --content-base public --host 0.0.0.0 --port 3000",
     "server": "node server-babelified.js"
   },
   "author": "Mikey Murphy <mikeyamadeo@gmail.com> (https://twitter.com/TranscendMikey)",
