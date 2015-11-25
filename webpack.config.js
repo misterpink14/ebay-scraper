@@ -2,6 +2,7 @@ var path = require('path')
 var appPath = path.resolve(__dirname, 'src', 'index.js')
 var buildPath = path.resolve(__dirname, 'public')
 
+
 module.exports = {
 
   entry: appPath,
@@ -28,6 +29,5 @@ module.exports = {
       }
     ]
   }
-
 }
 

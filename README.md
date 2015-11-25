@@ -1,19 +1,11 @@
-# es6
-
-
-### Up and Running 
-
-`git clone https://github.com/ProvoJS/es6.git`
-
-`npm i`
 
 ### Run Client
 
 `npm run client`
 
-go to `http://localhost:8080/` in browser
+go to 'ebaygroupproject-cbhomestar.c9users.io:8081' in browser
 
-### Run Server
+### Run Server -- still need to get this working
 
 `npm run server`
 

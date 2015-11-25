@@ -21,6 +21,10 @@
     position:absolute;
     width:100%;
     top:0;
+    text-align:center;
+    /*display: inline-block;*/
+    vertical-align: middle;
+    /*float: none;*/
 }
 
 .stretch {
@@ -29,10 +33,10 @@
     position: relative;
 }
 
-/*#about-us ul li {*/
-/*    display:table; */
-/*    margin:0 auto;*/
-/*}*/
+#about-us li {
+    display:table; 
+    margin:0 auto;
+}
 
 
 

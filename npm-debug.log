@@ -2,18 +2,16 @@
 1 verbose cli [ '/home/ubuntu/.nvm/versions/node/v4.1.1/bin/node',
 1 verbose cli   '/home/ubuntu/.nvm/versions/node/v4.1.1/bin/npm',
 1 verbose cli   'run',
-1 verbose cli   'client',
-1 verbose cli   '--port',
-1 verbose cli   '45537' ]
+1 verbose cli   'server' ]
 2 info using npm@2.14.4
 3 info using node@v4.1.1
-4 verbose run-script [ 'preclient', 'client', 'postclient' ]
-5 info preclient es6@1.0.0
-6 info client es6@1.0.0
+4 verbose run-script [ 'preserver', 'server', 'postserver' ]
+5 info preserver es6@1.0.0
+6 info server es6@1.0.0
 7 verbose unsafe-perm in lifecycle true
-8 info es6@1.0.0 Failed to exec client script
-9 verbose stack Error: es6@1.0.0 client: `webpack-dev-server --inline --content-base public --port 4000 "45537"`
-9 verbose stack Exit status 1
+8 info es6@1.0.0 Failed to exec server script
+9 verbose stack Error: es6@1.0.0 server: `PORT=8081 node server-babelified.js `
+9 verbose stack Exit status 143
 9 verbose stack     at EventEmitter.<anonymous> (/home/ubuntu/.nvm/versions/node/v4.1.1/lib/node_modules/npm/lib/utils/lifecycle.js:214:16)
 9 verbose stack     at emitTwo (events.js:87:13)
 9 verbose stack     at EventEmitter.emit (events.js:172:7)
@@ -25,17 +23,17 @@
 10 verbose pkgid es6@1.0.0
 11 verbose cwd /home/ubuntu/workspace
 12 error Linux 4.2.0-c9
-13 error argv "/home/ubuntu/.nvm/versions/node/v4.1.1/bin/node" "/home/ubuntu/.nvm/versions/node/v4.1.1/bin/npm" "run" "client" "--port" "45537"
+13 error argv "/home/ubuntu/.nvm/versions/node/v4.1.1/bin/node" "/home/ubuntu/.nvm/versions/node/v4.1.1/bin/npm" "run" "server"
 14 error node v4.1.1
 15 error npm  v2.14.4
 16 error code ELIFECYCLE
-17 error es6@1.0.0 client: `webpack-dev-server --inline --content-base public --port 4000 "45537"`
-17 error Exit status 1
-18 error Failed at the es6@1.0.0 client script 'webpack-dev-server --inline --content-base public --port 4000 "45537"'.
+17 error es6@1.0.0 server: `PORT=8081 node server-babelified.js `
+17 error Exit status 143
+18 error Failed at the es6@1.0.0 server script 'PORT=8081 node server-babelified.js '.
 18 error This is most likely a problem with the es6 package,
 18 error not with npm itself.
 18 error Tell the author that this fails on your system:
-18 error     webpack-dev-server --inline --content-base public --port 4000 "45537"
+18 error     PORT=8081 node server-babelified.js
 18 error You can get their info via:
 18 error     npm owner ls es6
 18 error There is likely additional logging output above.
