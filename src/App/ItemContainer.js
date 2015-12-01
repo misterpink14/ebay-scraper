@@ -23,6 +23,14 @@ var Auction = React.createClass ({
 						</h4>
 						<p>{this.props.description}</p>
 					</div>
+				</div>
+			</div>
+		);
+	}
+});
+
+
+/*
 					<div className="ratings">
 						<p className="pull-right">{this.props.ratings} reviews</p>
 						<p>
@@ -33,11 +41,7 @@ var Auction = React.createClass ({
 							<span className="glyphicon glyphicon-star"></span>
 						</p>
 					</div>
-				</div>
-			</div>
-		);
-	}
-});
+*/
 
 
 var ItemContainer = React.createClass ({

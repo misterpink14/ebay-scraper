@@ -16,25 +16,26 @@ var SmallItem = React.createClass({
 
 var AddItem = React.createClass({
 	getInitialState () {
-		var auctions;
+		var items;
 		
-		if (this.props.auctions)
+		if (this.props.items)
 		{
-			auctions = this.props.auctions;
+			items = this.props.items;
 		}
 		else
 		{
-			auctions = [];
+			items = [];
 		}
 		
-		return {auctions: auctions};
+		return {items: items};
 	},
 	addItem () {
-		this.props.masterAddItem();
+		$("#myModal").modal("hide");
+		this.props.masterAddItem($("#searchWord").val(), $("#minPrice").val(), $("#maxPrice").val());
 	},
 	render() {
-		var auctions = this.state.auctions.map(function(item) {
-			return <SmallItem name={item.title} />
+		var items = this.state.items.map(function(item) {
+			return <SmallItem name={item.searchWord} />
 		});
 		return (
 			<div className="col-md-3">
@@ -43,7 +44,7 @@ var AddItem = React.createClass({
 					<button className="btn btn-success" type="button" data-toggle="modal" data-target="#myModal">Add Item</button>
 				</div>
 				<div id='items'>
-				{auctions}
+				{items}
 				</div>
 				
 				<div id="myModal" className="modal fade" role="dialog">
@@ -63,7 +64,7 @@ var AddItem = React.createClass({
 				      	</div>
 				      </div>
 				      <div className="modal-footer">
-				        <button type="button" className="btn btn-default" onClick={this.addItem} data-dismiss="modal">Add</button>
+				        <button type="button" className="btn btn-primary" onClick={this.addItem}>Add</button>
 				        <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
 				      </div>
 				    </div>

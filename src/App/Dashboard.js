@@ -17,34 +17,39 @@ var Dashboard = React.createClass({
 	getInitialState () {
 		return {
 			loggedIn: false,
+			items: [],
 			auctions: [],
 			popup: <div></div>
 		};
 	},
-	masterAddItem() {
-		console.log(this.state.items)
-		this.state.auctions.push(
-			
-				{
-					title: "First Product",
-					description: "Product info",
-					num_ratings: 15,
-					cost: 24.99,
-					thumbnail: "http://placehold.it/320x150",
-				}
-			
-		);
-		this.setState({
-			auctions: this.state.auctions
+	masterAddItem(searchWord, minPrice, maxPrice) {
+		
+		this.state.items.push(
+		{
+			searchWord: searchWord,
+			minPrice: minPrice,
+			maxPrice: maxPrice
 		});
-		console.log(this.state.auctions)
+				
+		this.state.auctions.push(
+		{
+			title: searchWord + " Ebay auction",
+			description: "Product info",
+			num_ratings: 15,
+			cost: maxPrice,
+			thumbnail: "http://placehold.it/320x150",
+		});
+		this.setState({
+			auctions: this.state.auctions,
+			items: this.state.items
+		});
 	},
 	render () {
 		return (
 		<div>
 			<div className="container">
 				<div className="row">
-					<AddItem masterAddItem={this.masterAddItem} auctions={this.state.auctions}/>
+					<AddItem masterAddItem={this.masterAddItem} items={this.state.items}/>
 					<div className="col-md-9">
 						<ItemContainer auctions={this.state.auctions}/>
 					</div>
