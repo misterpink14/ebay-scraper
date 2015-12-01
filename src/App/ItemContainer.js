@@ -11,7 +11,7 @@ var React = require('react')
 
 
 
-var Item = React.createClass ({
+var Auction = React.createClass ({
 	render() {
 		return (
 			<div className="col-sm-4 col-lg-4 col-md-4">
@@ -42,18 +42,18 @@ var Item = React.createClass ({
 
 var ItemContainer = React.createClass ({
 	getInitialState () {
-		var items = this.props.items;
+		var auctions = this.props.auctions;
 		return {
-			items: items
+			auctions: auctions
 		};
 	},
 	render() {
-		var item_list =this.state.items.map(function(item) {
-			return <Item title={item.title} description={item.description} num_ratings={item.num_ratings} cost={item.cost} thumbnail={item.thumbnail} />
+		var auction_list = this.state.auctions.map(function(auction) {
+			return <Auction title={auction.title} description={auction.description} num_ratings={auction.num_ratings} cost={auction.cost} thumbnail={auction.thumbnail} />
 		});
 		return (
 			<div className="row">
-				{item_list}
+				{auction_list}
 			</div>
 		);
 	}

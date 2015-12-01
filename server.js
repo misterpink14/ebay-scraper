@@ -31,6 +31,9 @@ const compiler = webpack(config);
 router.use(express.static(path.resolve(__dirname, 'public')));
 router.use(webpackMiddleware(compiler)); 
 router.use(webpackHotMiddleware(compiler));
+
+
+
 var messages = [];
 var sockets = [];
 

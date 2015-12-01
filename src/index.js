@@ -6,9 +6,13 @@ import ReactDOM from 'react-dom';
 import { gifs, clientGifs } from './data';
 
 /* Import css */
-import './bootstrap/css/bootstrap.css';
+import './bootstrap/css/bootstrap.min.css';
 import './css/shop-homepage.css';
 import './css/style.css';
+// import 'jquery';
+// import './jquery.js'
+import './bootstrap/js/bootstrap.min.js'
+
 
 /* Components */
 import routes from './App/Routes.js';
