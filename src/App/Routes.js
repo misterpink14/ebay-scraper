@@ -28,7 +28,6 @@ import { IndexRoute, Route, Router } from 'react-router';
 
 /* Components */
 import Login from './Login.js';
-import SignUp from './SignUp.js';
 import Dashboard from './Dashboard.js';
 import AboutUs from './AboutUs.js';
 import App from './App.js';
@@ -42,7 +41,6 @@ var routes = (
 			<IndexRoute component={Login}/>
 			<Route name="page" path="/about-us" component={AboutUs} />
 			<Route name="dashboard" path="/dashboard" component={Dashboard} /> // 
-			<Route name="signup" path="/sign-up" component={SignUp}/> // Sign up page
 		</Route>
 	</Router>
 );

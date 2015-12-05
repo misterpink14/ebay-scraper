@@ -38,11 +38,48 @@
     margin:0 auto;
 }
 
+#logoutButton {
+    float: right;
+}
 
+.login {
+    display: inline-block;
+    background-color: #FFFFFF;/*#FF8182;*/
+    padding: 2em;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px;
+}
 
+.loginInput {
+    width: 100%;
+    border: 1px solid #dadada;
+    padding: 4px 12px;
+    border-radius: 8px;
+}
 
+.loginInput:focus { 
+    outline: none;
+    border-color: #9ecaed;
+    box-shadow: 0 0 10px #9ecaed;
+}
 
+.loginButton {
+    width: 100%;
+    padding: 4px;
+    display: inline-block;
+}
 
+.outer {
+    text-align: center;
+    
+}
+
+.orSignUp {
+    display: inline-block;
+    background-color: #FFFFFF;/*#FF8182;*/
+    padding: 2em;
+    margin-top: 5px;
+}
 
 /*DELETE THIS v*/
 

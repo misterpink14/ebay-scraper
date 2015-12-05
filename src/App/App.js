@@ -22,9 +22,10 @@ var App = React.createClass({
 						<div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 							<ul className="nav navbar-nav">
 								<li>
-								<a href="#/about-us">About</a>
+									<a href="#/about-us">About</a>
 								</li>
 							</ul>
+							<a id="logoutButton" href="#" className="navbar-brand">logout</a>
 						</div>
 					</div>
 				</nav>
