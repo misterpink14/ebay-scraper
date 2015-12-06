@@ -60,10 +60,12 @@ var AddItem = React.createClass({
 				      </div>
 				      <div className="modal-body">
 				      	<div>
-				        	Search Word: <input id="searchWord" type="text"/>
+				        	<input className="searchInput" placeholder="Search term" id="searchWord" type="text"/>
 				        </div>
+				        <br />
 				        <div>
-				        	Price Range: <input id="minPrice" type="number"/> To <input id="maxPrice" type="number"/>
+				        	Price Range: <input className="priceInput" placeholder="Min Price" id="minPrice" type="number"/> 
+				        	 To <input className="priceInput" placeholder="Max Price" id="maxPrice" type="number"/>
 				      	</div>
 				      </div>
 				      <div className="modal-footer">

@@ -50,6 +50,32 @@
     box-shadow: 0px 0px 5px;
 }
 
+.searchInput {
+    width: 100%;
+    border: 1px solid #dadada;
+    padding: 4px 12px;
+    border-radius: 8px;
+}
+
+.searchInput:focus {
+    outline: none;
+    border-color: #9ecaed;
+    box-shadow: 0 0 10px #9ecaed;
+}
+
+.priceInput {
+    border: 1px solid #dadada;
+    padding: 4px 12px;
+    border-radius: 8px;
+    margin-right: 5px;
+}
+
+.priceInput:focus {
+    outline: none;
+    border-color: #9ecaed;
+    box-shadow: 0 0 10px #9ecaed;
+}
+
 .loginInput {
     width: 100%;
     border: 1px solid #dadada;
