@@ -24,6 +24,7 @@
     "jquery": "^2.1.4",
     "less": "^2.5.3",
     "less-loader": "^2.2.1",
+    "mongoose": "^4.2.9",
     "react-router": "^1.0.0",
     "socketio": "^1.0.0",
     "style-loader": "^0.13.0",

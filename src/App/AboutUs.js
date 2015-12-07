@@ -1,3 +1,12 @@
+/*
+
+TODO
+	[]Better design
+	[]Blurbs about us
+
+*/
+
+
 /* React Dependancies */
 import React from 'react';
 

@@ -1,3 +1,12 @@
+/*
+
+TODO
+	[] Change jQuery to React
+	[] Implement this
+
+*/
+
+
 /* React Dependancies */
 var React = require('react');
 

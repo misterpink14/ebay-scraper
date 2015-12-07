@@ -1,6 +1,7 @@
 /*
 
-TODO: figure out why images arent rendering
+TODO
+	[] Figure out why images arent rendering
 
 */
 

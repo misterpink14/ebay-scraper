@@ -1,3 +1,12 @@
+/*
+
+TODO
+	[] Pop-up when item clicked
+	[] Function from parent class for updating the itemcontainer
+	[] Convert jQuery to react
+
+*/
+
 /* React Dependancies */
 var React = require('react');
 
@@ -29,7 +38,7 @@ var AddItem = React.createClass({
 		
 		return {items: items};
 	},
-	addItem () {
+	addItem () { // Update this to use react, lets try to use jquery for just requests. It'll make code cleaner/more readable
 		$("#popup").modal("hide");
 		this.props.masterAddItem($("#searchWord").val(), $("#minPrice").val(), $("#maxPrice").val());
 		$('#searchWord').val("");

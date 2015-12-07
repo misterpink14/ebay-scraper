@@ -15,27 +15,14 @@
     font-size: 15pt;
 }
 
-
-#about-us {
-    color: white;
-    position:absolute;
-    width:100%;
-    top:0;
-    text-align:center;
-    /*display: inline-block;*/
-    vertical-align: middle;
-    /*float: none;*/
-}
-
 .stretch {
     width:100%;
-    height:100%;
+    height:auto;
     position: relative;
 }
 
-#about-us li {
-    display:table; 
-    margin:0 auto;
+#about-us {
+    text-align:center;
 }
 
 #logoutButton {
@@ -106,6 +93,11 @@
     padding: 2em;
     margin-top: 5px;
 }
+
+
+
+
+
 
 /*DELETE THIS v*/
 

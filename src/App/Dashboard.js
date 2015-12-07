@@ -1,3 +1,11 @@
+/*
+
+TODO
+	[] Function for updating itemcontainer when item is updated (after popup todo in additem)
+
+*/
+
+
 /* React Dependancies */
 import React from 'react';
 
@@ -56,8 +64,8 @@ var Dashboard = React.createClass({
 			url: url,
 			dataType: "jsonp",
 			data: {keywords: searchWord},
-			success: function(root){
-				console.log(root);
+			success: function(data){
+				console.log(data);
 			}
 		})
 	},
