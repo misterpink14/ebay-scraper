@@ -53,7 +53,13 @@ var ItemContainer = React.createClass ({
 	},
 	render() {
 		var auction_list = this.state.auctions.map(function(auction) {
-			return <Auction title={auction.title} description={auction.description} num_ratings={auction.num_ratings} cost={auction.cost} thumbnail={auction.thumbnail} />
+			return (
+				<Auction title={auction.title} 
+						description={auction.description} 
+						num_ratings={auction.num_ratings} 
+						cost={auction.cost} 
+						thumbnail={auction.thumbnail} />
+			)
 		});
 		return (
 			<div className="row">

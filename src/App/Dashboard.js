@@ -52,6 +52,16 @@ var Dashboard = React.createClass({
 	requestAuctions(searchWord, minPrice, maxPrice) {
 		var url = "https://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=Benjamin-55ac-42b1-9842-8431acf86287&GLOBAL-ID=EBAY-US&RESPONSE-DATA-FORMAT=JSON&callback=_cb_findItemsByKeywords&REST-PAYLOAD&keywords=iphone&paginationInput.entriesPerPage=3";
 		console.log("trying.....");
+		var url = "https://svcs.ebay.com/services/search/FindingService/v1?SECURITY-APPNAME=Benjamin-55ac-42b1-9842-8431acf86287&OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.0.0&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&paginationInput.entriesPerPage=30";
+		$.ajax({
+			url: url,
+			dataType: "jsonp",
+			data: {keywords: searchWord},
+			success: function(root){
+				console.log(root);
+			}
+		})
+		console.log("more");/*
 		$.getJSON(url,function(data) { 
 				console.log(data); 
 			}) 
@@ -67,7 +77,7 @@ var Dashboard = React.createClass({
 			}) 
 			.complete(function() { 
 			console.log("complete"); 
-			}); 
+			}); */
 	},
 	
 	render () {
