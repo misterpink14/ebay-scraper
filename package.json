@@ -33,9 +33,6 @@
     "webpack-dev-server": "1.12.1"
   },
   "scripts": {
-    "client": "webpack-dev-server --inline --content-base public --host 0.0.0.0 --port 8081",
-    "server": "PORT=8081 node server-babelified.js "
-  },
-  "author": "Mikey Murphy <mikeyamadeo@gmail.com> (https://twitter.com/TranscendMikey)",
-  "license": "ISC"
+    "server": "PORT=8080 node server-babelified.js "
+  }
 }
