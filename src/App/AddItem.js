@@ -1,10 +1,8 @@
 /*
-
 TODO
 	[] Pop-up when item clicked
 	[] Function from parent class for updating the itemcontainer
 	[] Convert jQuery to react
-
 */
 
 /* React Dependancies */
