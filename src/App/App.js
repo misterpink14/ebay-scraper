@@ -9,7 +9,7 @@ var App = React.createClass({
 		return (
 			<div>
 				<nav className="navbar navbar-inverse navbar-fixed-top" role="navigation">
-					<div className="container">
+					<div>
 						<div className="navbar-header">
 							<button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 								<span className="sr-only">Toggle navigation</span>

@@ -48,6 +48,7 @@ const compiler = webpack(config); // compile
 /* Setup Mongoose */
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/ebay');
+var User = require("./models/User");
 
 router.use(express.static(path.resolve(__dirname, 'public')));
 router.use(webpackMiddleware(compiler)); 
@@ -87,7 +88,6 @@ io.on('connection', function (socket)
 	socket.on('message', function (msg) 
 	{
 		var text = String(msg || '');
-
 		if (!text)
 			return;
 
@@ -141,4 +141,26 @@ server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function()
 {
 	var addr = server.address();
 	console.log("Chat server listening at", addr.address + ":" + addr.port);
+});
+
+router.get("/saveUser",function(request, response){
+    var newUser = new User({ 
+    	Username: "Bob", 
+	    Password: "Bobson", 
+	    Items: [] 
+    });
+	newUser.save(function (err) {
+	  if (err){
+	  	console.log("Error!");
+	  }
+	});
+    response.writeHead(200, {"Content-Type": "text/html"});
+    response.end("You stored a user");
+});
+
+router.get('/Users', function(req, res, next) {
+  User.find(function(err, data){
+    if(err){ return next(err); }
+    res.json(data);
+  });
 });

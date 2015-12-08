@@ -12,17 +12,49 @@ var React = require('react');
 
 
 var Login = React.createClass ({
+	getInitialState() {
+		return {
+			email: "",
+			password: "",
+			verify: "", 
+			show_modal: false
+		};
+	},
+	updateEmail(event) {
+		var email = event.target.value;
+		this.setState({
+			email: email
+		});
+	},
+	updatePassword(event) {
+		var password = event.target.value;
+		this.setState({
+			password: password
+		});
+	},
+	updateVerify(event) {
+		var verify = event.target.value;
+		this.setState({
+			verify: verify
+		});
+	},
 	signUp () {
-		$("#sign-up-popup").modal("hide");
-		$('#username').val("");
-		$('#password').val("");
-		alert("You Signed Up!")	
+		var email = this.state.email;
+		var password = this.state.password;
+		var verify = this.state.verify;
+		console.log(this.state.email)
+		console.log(password)
+		console.log(verify)
 	},
 	render () { // remove a tag in button
+		var email = this.state.email;
+		var password = this.state.password;
+		var verify = this.state.verify;
 		return (
-			<div className="container snowImage">
+			<div className="loginBackgroundImage">
 				<br /> 
 				<div className="outer">
+				<br /><br /><br />
 				<div className="text-center login col-md-4 col-md-offset-4">
 					<span className="pt15">Welcome to eBay Tracker</span><br /><br /><br />
 					<input className="loginInput" placeholder="Email" type="text" /><br /><br />
@@ -37,7 +69,7 @@ var Login = React.createClass ({
 				</div>
 				</div>
 				
-				<div id="sign-up-popup" className="modal fade" role="dialog">
+				<div id="sign-up-popup" className={this.state.show_modal ? "modal" : ""} + " fade" role="dialog">
 				  <div className="modal-dialog">
 				
 				    <div className="modal-content">
@@ -48,11 +80,11 @@ var Login = React.createClass ({
 				      <div className="modal-body">
 				      <br />
 				      	<div>
-				        	<input className="loginInput" placeholder="Email" id="username" type="text"/>
+				        	<input className="loginInput" placeholder="Email" id="username" value={email} onChange={this.updateEmail} type="text"/>
 				        	<br /><br />
-				        	<input className="loginInput" placeholder="Password" id="password" type="password"/>
+				        	<input className="loginInput" placeholder="Password" id="password" value={password} onChange={this.updatePassword} type="password"/>
 				        	<br /><br />
-				        	<input className="loginInput" placeholder="Verify Password" id="verify-password" type="password"/>
+				        	<input className="loginInput" placeholder="Verify Password" id="verify" value={verify} onChange={this.updateVerify} type="password"/>
 				      	</div>
 				      </div>
 				      <br />
