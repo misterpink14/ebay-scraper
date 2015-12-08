@@ -1,14 +1,15 @@
 /*
 
 TODO
-	[ben] Get mongo/mongoose working 
+	[x] Get mongo/mongoose working 
 		[x] Basic setup
-		[] Add user object -- reference => http://mongoosejs.com/docs/index.html
-		[] Add item object -- pick a better name than item
+		[x] Add user object -- reference => mongoosejs.com/docs/index.html
+		[x] Add item object -- pick a better name than item
 	[] Add endpoints for
 		[] Login / users
 		[] Saved items
 	[] Implement password security
+	[] Use socketio instead of express
 		
 
 */
@@ -26,6 +27,7 @@ var path = require('path');
 var async = require('async');
 var socketio = require('socket.io');
 var express = require('express');
+var bodyParser = require('body-parser');
 
 /* Webpack -- compile react */
 import webpackMiddleware from 'webpack-dev-middleware';  
@@ -53,7 +55,7 @@ var User = require("./models/User");
 router.use(express.static(path.resolve(__dirname, 'public')));
 router.use(webpackMiddleware(compiler)); 
 router.use(webpackHotMiddleware(compiler));
-
+router.use(bodyParser());
 
 /* Connect to the db */
 var db = mongoose.connection;
@@ -143,20 +145,50 @@ server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function()
 	console.log("Chat server listening at", addr.address + ":" + addr.port);
 });
 
-router.get("/saveUser",function(request, response){
+router.post("/user",function(request, response){
+	console.log(request.body)
+	
+	var email = request.body.email;
+	var password = request.body.password;
+	
     var newUser = new User({ 
-    	Username: "Bob", 
-	    Password: "Bobson", 
+    	Username: email, 
+	    Password: password, 
 	    Items: [] 
     });
 	newUser.save(function (err) {
-	  if (err){
+	  if (err)
+	  {
 	  	console.log("Error!");
+	  	response.send("Failure\n");
+	  }
+	  else
+	  {
+	  	console.log("saved user");
+	    response.send("OK\n");
 	  }
 	});
-    response.writeHead(200, {"Content-Type": "text/html"});
-    response.end("You stored a user");
 });
+
+
+router.put("/user", function(req, res) {
+	console.log(req.body);
+	var email = req.body.email;
+	var password = req.body.password;
+	
+	
+	User.findOne(
+		{
+			'Username': email,
+			'Password': password
+		},
+		function (err, user) {
+			console.log(user);
+			res.json(user);
+		}
+	);
+});
+
 
 router.get('/Users', function(req, res, next) {
   User.find(function(err, data){

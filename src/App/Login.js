@@ -10,7 +10,7 @@ TODO
 var React = require('react');
 
 
-// example@ex.com
+// Check that the email is valid
 function checkEmail (email) {
 	var email_arr = email.split("@");
 	if (email_arr.length != 2)
@@ -25,6 +25,8 @@ function checkEmail (email) {
 	return true;
 }
 
+
+// Check that the password and verification is valid
 function checkPasswords (password, verify) {
 	return password == verify;
 }
@@ -36,7 +38,7 @@ var SignUpError = React.createClass({
 		return (
 			<div>
 				<hr />
-				<span style={{color: "#b30000"}}>{this.props.message}</span>
+				<span className="signup-error">{this.props.message}</span>
 			</div>
 		);
 	}
@@ -46,6 +48,7 @@ var SignUpError = React.createClass({
 
 
 var Login = React.createClass ({
+	
 	getInitialState() {
 		return {
 			email: "",
@@ -55,25 +58,30 @@ var Login = React.createClass ({
 			error_message: ""
 		};
 	},
+	
 	updateEmail(event) {
 		var email = event.target.value;
 		this.setState({
 			email: email
 		});
 	},
+	
 	updatePassword(event) {
 		var password = event.target.value;
 		this.setState({
 			password: password
 		});
 	},
+	
 	updateVerify(event) {
 		var verify = event.target.value;
 		this.setState({
 			verify: verify
 		});
 	},
+	
 	showError (err) {
+		// generate error message
 		var message = "* ";
 		if (err == 'email')
 		{
@@ -87,11 +95,14 @@ var Login = React.createClass ({
 		{
 			message += "Your password's don't match";
 		}
+		
+		// Update state
 		this.setState({
 			isError: true,
 			error_message: message
 		});
 	},
+	
 	signUp () {
 		var email = this.state.email;
 		var password = this.state.password;
@@ -112,6 +123,8 @@ var Login = React.createClass ({
 		if (password == "")
 		{
 			this.showError("password");
+			console.log("error -- password");
+			return;
 		}
 		
 		if (!checkPasswords(password, verify))
@@ -126,13 +139,62 @@ var Login = React.createClass ({
 			});
 		}
 		
-		
-		console.log(this.state.email)
-		console.log(password)
-		console.log(verify)
-		$("#sign-up-popup").modal("hide");
-		alert("You Signed Up!")
+		console.log("hi");
+		// Sign up ajax request
+		var url = "user";
+		$.post( 
+			url, 
+			{
+				email: email,
+				password: password
+			},
+			function(data) {
+				console.log("gud");
+				console.log(data);
+				console.log(status);
+				
+				
+				$("#sign-up-popup").modal("hide");
+				alert("You Signed Up!")
+			}
+		);
+		this.setState({
+			email: "",
+			password: "",
+			verify: ""
+		});
 	},
+	
+	login() {
+		console.log("login")
+		
+		var email = this.state.email;
+		var password = this.state.password;
+		
+		var url = "user";
+		$.ajax({
+			url: url,
+			type: "PUT",
+			data: {
+				email: email,
+				password: password
+			},
+			success: function(data) {
+				console.log("gud");
+				console.log(data);
+				if (data._id)
+				{
+					window.location.href = '#/dashboard';
+				}
+			}
+		});
+		this.setState({
+			email: "",
+			password: "",
+			verify: ""
+		});
+	},
+	
 	render () { // remove a tag in button
 		var email = this.state.email;
 		var password = this.state.password;
@@ -144,9 +206,9 @@ var Login = React.createClass ({
 				<br /><br /><br />
 				<div className="text-center login col-md-4 col-md-offset-4">
 					<span className="pt15">Welcome to eBay Tracker</span><br /><br /><br />
-					<input className="loginInput" placeholder="Email" type="text" /><br /><br />
-					<input className="loginInput" placeholder="Password" type="password" /><br /><br />
-					<button type="submit" className="btn btn-primary loginButton">
+					<input className="loginInput" placeholder="Email" type="text" value={email} onChange={this.updateEmail} /><br /><br />
+					<input className="loginInput" placeholder="Password" type="password" value={password} onChange={this.updatePassword} /><br /><br />
+					<button type="submit" className="btn btn-primary loginButton" onClick={this.login}>
 						<a href="#/dashboard" className="white">Log in to your account</a>
 					</button><br />
 				</div>

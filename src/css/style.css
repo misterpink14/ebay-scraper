@@ -29,10 +29,14 @@
 }
 
 .aboutUsImage {
-    background-image: url("https://images.unsplash.com/photo-1432821596592-e2c18b78144f?crop=entropy&dpr=2&fit=crop&fm=jpg&h=700&ixjsv=2.1.0&ixlib=rb-0.3.5&q=50&w=1375");
-    background-size: contain;
+    background: url("http://i.imgur.com/MxgNH13.jpg") no-repeat center center fixed;
+    background-size: cover;
     width: 100%;
     height: 100%;
+}
+
+.profileImg {
+    height: 100px;
 }
 
 #about-us {
@@ -49,6 +53,11 @@
     padding: 2em;
     border-radius: 10px;
     box-shadow: 0px 0px 5px;
+}
+
+.aboutUsPerson {
+    display: inline-block;
+    float: left;
 }
 
 .searchInput {
@@ -113,10 +122,12 @@
     padding-bottom: 0;
 }
 
-
-
 body { 
   padding: 45px 0 0 0;
+}
+
+.signup-error {
+    color: #b30000;
 }
 
 

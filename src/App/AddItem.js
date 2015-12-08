@@ -10,13 +10,16 @@ TODO
 /* React Dependancies */
 var React = require('react');
 
-
-
 var SmallItem = React.createClass({
+	requestAuctions () {
+		//TODO: get searchword, minprice, and maxprice from the database to pass into requestAuctions....
+		this.props.requestAuctions("Iphone", "0", "300");
+	},
+	
     render() {
         return (
         	<div>
-            	<a className="list-group-item">{this.props.name}</a>
+            	<a className="list-group-item" onClick={this.requestAuctions}>{this.props.name}</a>
         	</div>
         );
     }
@@ -38,6 +41,7 @@ var AddItem = React.createClass({
 		
 		return {items: items};
 	},
+	
 	addItem () { // Update this to use react, lets try to use jquery for just requests. It'll make code cleaner/more readable
 		$("#popup").modal("hide");
 		this.props.masterAddItem($("#searchWord").val(), $("#minPrice").val(), $("#maxPrice").val());
@@ -45,12 +49,15 @@ var AddItem = React.createClass({
 		$('#minPrice').val("");
 		$('#maxPrice').val("");
 	},
+	
 	render() {
+		var requestAuctions = this.props.requestAuctions;
 		var items = this.state.items.map(function(item) {
-			return <SmallItem name={item.searchWord} />
-		});
+			return <SmallItem name={item.searchWord} requestAuctions={requestAuctions}/>
+		}, requestAuctions)
 		return (
 			<div className="col-md-3">
+			<br />
 				<p className="lead">Items</p>
 				<div id="itemList" className="list-group">
 					<button className="btn btn-success" type="button" data-toggle="modal" data-target="#popup">Add Item</button>

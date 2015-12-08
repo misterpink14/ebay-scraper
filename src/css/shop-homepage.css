@@ -55,11 +55,7 @@ footer {
 
 
 
-.list-group-item {
+.list-group-item:hover {
     background-color: #98CC96;
 }
 
-.list-group-item:hover,
-.list-group-item:focus {
-    background-color: red;
-}
