@@ -39,35 +39,38 @@ var Dashboard = React.createClass({
 			minPrice: minPrice,
 			maxPrice: maxPrice
 		});
-		var returnVar;
-		this.requestAuctions(searchWord, minPrice, maxPrice);
-		// console.log(returnVar);
 		
-		// this.setState({
-		// 	auctions: this.state.auctions,
-		// 	items: this.state.items
-		// });
+		this.state.auctions = [];
+		var displayAuctions = this.displayAuctions;
+		$.when(this.auctionRequest(searchWord, minPrice, maxPrice)).done(function(data){
+			displayAuctions(data);
+		})
 	},
 	
-	requestAuctions(searchWord, minPrice, maxPrice, returnVar) {
+	requestAuctions(searchWord, minPrice, maxPrice) {
+		console.log("dashboard");
 		this.state.auctions = [];
-		var url = "https://svcs.ebay.com/services/search/FindingService/v1?SECURITY-APPNAME=Benjamin-55ac-42b1-9842-8431acf86287&OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.0.0&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&paginationInput.entriesPerPage=30";
 		var displayAuctions = this.displayAuctions;
-		var tempData;
-		$.ajax({
-			async: false,
+		$.when(this.auctionRequest(searchWord, minPrice, maxPrice)).done(function(data){
+			displayAuctions(data);
+		})
+	},
+	
+	auctionRequest(searchWord, minPrice, maxPrice){
+		var displayAuctions = this.displayAuctions;
+		var url = "https://svcs.ebay.com/services/search/FindingService/v1?SECURITY-APPNAME=Benjamin-55ac-42b1-9842-8431acf86287&OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.0.0&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&paginationInput.entriesPerPage=30";
+		return $.ajax({
 			type: "GET",
 			url: url,
 			dataType: "jsonp",
 			data: {keywords: searchWord},
 			success: (function(data){
-				displayAuctions(data);
 			})
-		})
-		
+		}) 
 	},
 	
 	displayAuctions(data) {
+		console.log(data);
 		for(var i in data.findItemsByKeywordsResponse[0].searchResult[0].item)
 		{
 			this.setState({
@@ -76,13 +79,12 @@ var Dashboard = React.createClass({
 					title: data.findItemsByKeywordsResponse[0].searchResult[0].item[i].title[0],
 					description: "Product info",
 					num_ratings: 15,
-					cost: "a price",
-					thumbnail: "https://placehold.it/320x150",
+					cost: 100,
+					thumbnail: data.findItemsByKeywordsResponse[0].searchResult[0].item[i].galleryURL[0],
 					url: data.findItemsByKeywordsResponse[0].searchResult[0].item[i].viewItemURL[0]
 				}])
 			});
 		}
-		console.log(this.state.auctions);
 	},
 	
 	render () {

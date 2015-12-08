@@ -31,7 +31,8 @@ body {
 }
 
 .thumbnail img {
-    width: 100%;
+    width: auto;
+    height: 250px;
 }
 
 .ratings {

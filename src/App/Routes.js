@@ -2,21 +2,7 @@
 
 	TODO:
 	
-		[x] Sign-in / up page
-		[] About Page
-		[x] Remove Services page
-		[x] Remove Contact page
-		[] Define Item Obejct - Steve's gonna try this.
-		[] Add item functionality
-			- Popup? or something
-			- Fills in item object data (Form)
-		[] Fix font compliling - webpack
-		
-		SERVER: 
-		
-			[] Users
-			[] Ebay search (url is in the doc)
-
+		[ben] figure out auth
 
 */
 
@@ -33,6 +19,21 @@ import AboutUs from './AboutUs.js';
 import App from './App.js';
 
 
+var isLoggedin = true;
+
+
+
+function requireAuth(nextState, replaceState) 
+{
+	if(!isLoggedin)
+	{
+		replaceState({ 
+			nextPathname: nextState.location.pathname 
+			
+		}, '#')
+	}
+}
+
 
 // Run the routes --- there is an attribute of route called onEnter < then you can add some kind of auth
 var routes = (
@@ -40,7 +41,7 @@ var routes = (
 		<Route name="app" path="/" component={App}>
 			<IndexRoute component={Login}/>
 			<Route name="page" path="/about-us" component={AboutUs} />
-			<Route name="dashboard" path="/dashboard" component={Dashboard} /> // 
+			<Route name="dashboard" path="/dashboard" component={Dashboard} onEnter={requireAuth} />
 		</Route>
 	</Router>
 );

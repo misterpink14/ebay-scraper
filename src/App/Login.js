@@ -1,7 +1,10 @@
 /*
 
 TODO
-	[] Implement this
+	[] Make it so you can only go to the dashboard when logged in.
+	[] Pass user data to dashboard
+	[] Hash/salt the password
+	[] Don't make pointless things go through the ajax
 
 */
 
@@ -30,6 +33,7 @@ function checkEmail (email) {
 function checkPasswords (password, verify) {
 	return password == verify;
 }
+
 
 
 
@@ -139,7 +143,6 @@ var Login = React.createClass ({
 			});
 		}
 		
-		console.log("hi");
 		// Sign up ajax request
 		var url = "user";
 		$.post( 
@@ -149,13 +152,15 @@ var Login = React.createClass ({
 				password: password
 			},
 			function(data) {
-				console.log("gud");
-				console.log(data);
-				console.log(status);
-				
-				
-				$("#sign-up-popup").modal("hide");
-				alert("You Signed Up!")
+				if (data.trim() == "OK") 
+				{
+					$("#sign-up-popup").modal("hide");
+					alert("You Signed Up!");
+				}
+				else 
+				{
+					alert("An error occured, please try again");
+				}
 			}
 		);
 		this.setState({
@@ -166,8 +171,6 @@ var Login = React.createClass ({
 	},
 	
 	login() {
-		console.log("login")
-		
 		var email = this.state.email;
 		var password = this.state.password;
 		
@@ -179,11 +182,14 @@ var Login = React.createClass ({
 				email: email,
 				password: password
 			},
-			success: function(data) {
-				console.log("gud");
-				console.log(data);
-				if (data._id)
+			success: function(data, err) {
+				if (err.trim() != 'success')
 				{
+					return;
+				}
+				else
+				{
+					// isLoggedin = true;
 					window.location.href = '#/dashboard';
 				}
 			}
@@ -219,32 +225,31 @@ var Login = React.createClass ({
 				</div>
 				
 				<div id="sign-up-popup" className="modal fade" role="dialog">
-				  <div className="modal-dialog">
+					<div className="modal-dialog">
 				
-				    <div className="modal-content">
-				      <div className="modal-header">
-				        <button type="button" className="close" data-dismiss="modal">&times;</button>
-				        <h4 className="modal-title">Sign-Up</h4>
-				      </div>
-				      <div className="modal-body">
-				      <br />
-				      	<div>
-				        	<input className="loginInput" placeholder="Email" id="username" value={email} onChange={this.updateEmail} type="text"/>
-				        	<br /><br />
-				        	<input className="loginInput" placeholder="Password" id="password" value={password} onChange={this.updatePassword} type="password"/>
-				        	<br /><br />
-				        	<input className="loginInput" placeholder="Verify Password" id="verify" value={verify} onChange={this.updateVerify} type="password"/>
-				      	</div>
-				      	{ this.state.isError ? <SignUpError message={this.state.error_message}/> : ""}
-				      </div>
-				      <br />
-				      <div className="modal-footer">
-				        <button type="button" className="btn btn-primary" onClick={this.signUp}>Sign-Up</button>
-				        <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-				      </div>
-				    </div>
-				
-				  </div>
+						<div className="modal-content">
+							<div className="modal-header">
+								<button type="button" className="close" data-dismiss="modal">&times;</button>
+								<h4 className="modal-title">Sign-Up</h4>
+							</div>
+							<div className="modal-body">
+							<br />
+								<div>
+									<input className="loginInput" placeholder="Email" id="username" value={email} onChange={this.updateEmail} type="text"/>
+									<br /><br />
+									<input className="loginInput" placeholder="Password" id="password" value={password} onChange={this.updatePassword} type="password"/>
+									<br /><br />
+									<input className="loginInput" placeholder="Verify Password" id="verify" value={verify} onChange={this.updateVerify} type="password"/>
+								</div>
+								{ this.state.isError ? <SignUpError message={this.state.error_message}/> : ""}
+							</div>
+							<br />
+							<div className="modal-footer">
+								<button type="button" className="btn btn-primary" onClick={this.signUp}>Sign-Up</button>
+								<button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		);

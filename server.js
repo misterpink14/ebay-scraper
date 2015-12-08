@@ -6,7 +6,6 @@ TODO
 		[x] Add user object -- reference => mongoosejs.com/docs/index.html
 		[x] Add item object -- pick a better name than item
 	[] Add endpoints for
-		[] Login / users
 		[] Saved items
 	[] Implement password security
 	[] Use socketio instead of express

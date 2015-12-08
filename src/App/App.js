@@ -5,6 +5,19 @@ import { Link } from 'react-router';
 
 
 var App = React.createClass({
+	
+	getInitialState() {
+		return {
+			isLogin: false
+		}	
+	},
+	
+	login () {
+		this.setState({
+			isLogin: true
+		})
+	}, 
+	
 	render () {
 		return (
 			<div>
@@ -25,7 +38,7 @@ var App = React.createClass({
 									<a href="#/about-us">About</a>
 								</li>
 							</ul>
-							<a id="logoutButton" href="#" className="navbar-brand">logout</a>
+							{ this.state.isLogin ? <a id="logoutButton" href="#" className="navbar-brand">logout</a> : <span></span> }
 						</div>
 					</div>
 				</nav>
