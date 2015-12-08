@@ -30,7 +30,7 @@ var App = React.createClass({
 					</div>
 				</nav>
 			
-				<div className="container">
+				<div className= "removeUpperPadding">
 					{this.props.children}
 				</div>
 			</div>

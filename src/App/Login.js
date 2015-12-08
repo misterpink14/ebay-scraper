@@ -1,7 +1,6 @@
 /*
 
 TODO
-	[] Change jQuery to React
 	[] Implement this
 
 */
@@ -21,11 +20,11 @@ var Login = React.createClass ({
 	},
 	render () { // remove a tag in button
 		return (
-			<div className="container">
+			<div className="container snowImage">
 				<br /> 
 				<div className="outer">
 				<div className="text-center login col-md-4 col-md-offset-4">
-					<span className="pt15">Please log in!</span><br /><br /><br />
+					<span className="pt15">Welcome to eBay Tracker</span><br /><br /><br />
 					<input className="loginInput" placeholder="Email" type="text" /><br /><br />
 					<input className="loginInput" placeholder="Password" type="password" /><br /><br />
 					<button type="submit" className="btn btn-primary loginButton">
@@ -34,7 +33,7 @@ var Login = React.createClass ({
 				</div>
 				<br /><br /><br />
 				<div className="text-center orSignUp col-md-4 col-md-offset-4">
-					<input type="button" className="btn" data-toggle="modal" data-target="#sign-up-popup" value = "Don't have an account? Sign up here"/>
+					<input type="button" className="btn" data-toggle="modal" data-target="#sign-up-popup" value="Don't have an account? Sign up here"/>
 				</div>
 				</div>
 				
@@ -52,6 +51,8 @@ var Login = React.createClass ({
 				        	<input className="loginInput" placeholder="Email" id="username" type="text"/>
 				        	<br /><br />
 				        	<input className="loginInput" placeholder="Password" id="password" type="password"/>
+				        	<br /><br />
+				        	<input className="loginInput" placeholder="Verify Password" id="verify-password" type="password"/>
 				      	</div>
 				      </div>
 				      <br />

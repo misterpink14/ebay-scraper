@@ -14,4 +14,4 @@ go to 'ebaygroupproject-cbhomestar.c9users.io' in browser
 
 `./mongod`
 
-- may need to run as `sudo mongod --repair`
+- may need to run as `sudo mongod --smallfiles`

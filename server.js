@@ -70,52 +70,53 @@ var sockets = [];
 
 
 io.on('connection', function (socket) 
+{
+	messages.forEach(function (data) 
+	{
+		socket.emit('message', data);
+	});
+
+	sockets.push(socket);
+
+	socket.on('disconnect', function () 
+	{
+		sockets.splice(sockets.indexOf(socket), 1);
+		updateRoster();
+	});
+
+	socket.on('message', function (msg) 
+	{
+		var text = String(msg || '');
+
+		if (!text)
+			return;
+
+		socket.get('name', function (err, name) 
 		{
-		messages.forEach(function (data) 
-		{
-			socket.emit('message', data);
-		});
-
-		sockets.push(socket);
-
-		socket.on('disconnect', function () 
-		{
-			sockets.splice(sockets.indexOf(socket), 1);
-			updateRoster();
-		});
-
-		socket.on('message', function (msg) 
-		{
-			var text = String(msg || '');
-
-			if (!text)
-				return;
-
-			socket.get('name', function (err, name) 
+			var data = 
 			{
-				var data = 
-				{
-					name: name,
-					text: text
-				};
+				name: name,
+				text: text
+			};
 
-				broadcast('message', data);
-				messages.push(data);
-			});
-		});
-
-		socket.on('identify', function (name) 
-		{
-			socket.set('name', String(name || 'Anonymous'), function (err) 
-			{
-				updateRoster();
-			});
+			broadcast('message', data);
+			messages.push(data);
 		});
 	});
 
+	socket.on('identify', function (name) 
+	{
+		socket.set('name', String(name || 'Anonymous'), function (err) 
+		{
+			updateRoster();
+		});
+	});
+});
+
 function updateRoster() 
 {
-	async.map(
+	async.map
+	(
 		sockets,
 		function (socket, callback) 
 		{
