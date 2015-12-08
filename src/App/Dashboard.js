@@ -48,7 +48,6 @@ var Dashboard = React.createClass({
 	},
 	
 	requestAuctions(searchWord, minPrice, maxPrice) {
-		console.log("dashboard");
 		this.state.auctions = [];
 		var displayAuctions = this.displayAuctions;
 		$.when(this.auctionRequest(searchWord, minPrice, maxPrice)).done(function(data){
@@ -58,7 +57,22 @@ var Dashboard = React.createClass({
 	
 	auctionRequest(searchWord, minPrice, maxPrice){
 		var displayAuctions = this.displayAuctions;
-		var url = "https://svcs.ebay.com/services/search/FindingService/v1?SECURITY-APPNAME=Benjamin-55ac-42b1-9842-8431acf86287&OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.0.0&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&paginationInput.entriesPerPage=30";
+		var url = "https://svcs.ebay.com/services/search/FindingService/v1?" + 
+					"SECURITY-APPNAME=Benjamin-55ac-42b1-9842-8431acf86287&" +
+					"OPERATION-NAME=findItemsByKeywords&" + 
+					"itemFilter(0).name=MaxPrice&" +
+					"itemFilter(0).value=" + maxPrice + "&" +
+					"itemFilter(0).paramName=Currency&" +
+					"itemFilter(0).paramValue=USD&" +
+					"itemFilter(1).name=MinPrice&" +
+					"itemFilter(1).value=" + minPrice + "&" +
+					"itemFilter(1).paramName=Currency&" +
+					"itemFilter(1).paramValue=USD&" + 
+					"sortOrder=PricePlusShippingLowest&" +
+					"SERVICE-VERSION=1.0.0&" + 
+					"RESPONSE-DATA-FORMAT=JSON&" + 
+					"REST-PAYLOAD&" +
+					"paginationInput.entriesPerPage=100&";
 		return $.ajax({
 			type: "GET",
 			url: url,
@@ -71,20 +85,23 @@ var Dashboard = React.createClass({
 	
 	displayAuctions(data) {
 		console.log(data);
+		var auctions = this.state.auctions;
 		for(var i in data.findItemsByKeywordsResponse[0].searchResult[0].item)
 		{
-			this.setState({
-				auctions: this.state.auctions.concat([
-				{
-					title: data.findItemsByKeywordsResponse[0].searchResult[0].item[i].title[0],
-					description: "Product info",
-					num_ratings: 15,
-					cost: 100,
-					thumbnail: data.findItemsByKeywordsResponse[0].searchResult[0].item[i].galleryURL[0],
-					url: data.findItemsByKeywordsResponse[0].searchResult[0].item[i].viewItemURL[0]
-				}])
-			});
+			auctions = auctions.concat([
+			{
+				title: data.findItemsByKeywordsResponse[0].searchResult[0].item[i].title[0],
+				description: "Product info",
+				num_ratings: 15,
+				cost: data.findItemsByKeywordsResponse[0].searchResult[0].item[i].sellingStatus[0].currentPrice[0].__value__,
+				thumbnail: data.findItemsByKeywordsResponse[0].searchResult[0].item[i].galleryURL[0],
+				url: data.findItemsByKeywordsResponse[0].searchResult[0].item[i].viewItemURL[0]
+			}])
 		}
+		
+		this.setState({
+			auctions: auctions
+		})
 	},
 	
 	render () {

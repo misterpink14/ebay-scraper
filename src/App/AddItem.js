@@ -10,11 +10,12 @@ TODO
 /* React Dependancies */
 var React = require('react');
 
+
 var SmallItem = React.createClass({
 	requestAuctions () {
 		//TODO: get searchword, minprice, and maxprice from the database to pass into requestAuctions....
 		console.log("small item");
-		this.props.requestAuctions("Iphone", "0", "300");
+		this.props.requestAuctions(this.props.name, this.props.minPrice, this.props.maxPrice);
 	},
 	
     render() {
@@ -54,7 +55,7 @@ var AddItem = React.createClass({
 	render() {
 		var requestAuctions = this.props.requestAuctions;
 		var items = this.state.items.map(function(item) {
-			return <SmallItem name={item.searchWord} requestAuctions={requestAuctions}/>
+			return <SmallItem name={item.searchWord} minPrice={item.minPrice} maxPrice={item.maxPrice} requestAuctions={requestAuctions}/>
 		}, requestAuctions)
 		return (
 			<div className="col-md-3">
