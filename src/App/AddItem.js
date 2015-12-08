@@ -12,7 +12,6 @@ var React = require('react');
 var SmallItem = React.createClass({
 	requestAuctions () {
 		//TODO: get searchword, minprice, and maxprice from the database to pass into requestAuctions....
-		console.log("small item");
 		this.props.requestAuctions(this.props.name, this.props.minPrice, this.props.maxPrice);
 	},
 	

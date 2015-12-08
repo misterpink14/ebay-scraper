@@ -58,5 +58,6 @@ footer {
 
 .list-group-item:hover {
     background-color: #98CC96;
+    cursor: pointer;
 }
 
