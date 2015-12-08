@@ -15,9 +15,9 @@ import React from 'react';
 var AboutUs = React.createClass({
   render () {
 	return (
-		<div className="container">
-			<img className="aboutUsImage" src="http://pcwallart.com/images/utah-mountains-wallpaper-2.jpg" className="stretch" align="middle" alt="" />
-			<div id="about-us">
+		<div className="aboutUsImage">
+			<br /><br /><br /><br /><br /><br />
+			<div className="text-center col-md-4 col-md-offset-4">
 				<h1>About Us</h1>
 				<h3>Team Members</h3>
 					<li>Cody Burt</li>

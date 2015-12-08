@@ -10,6 +10,40 @@ TODO
 var React = require('react');
 
 
+// example@ex.com
+function checkEmail (email) {
+	var email_arr = email.split("@");
+	if (email_arr.length != 2)
+	{
+		return false;
+	}
+	email_arr = email_arr[1].split(".");
+	if (email_arr.length != 2)
+	{
+		return false;
+	}
+	return true;
+}
+
+function checkPasswords (password, verify) {
+	return password == verify;
+}
+
+
+
+var SignUpError = React.createClass({
+	render () {
+		return (
+			<div>
+				<hr />
+				<span style={{color: "#b30000"}}>{this.props.message}</span>
+			</div>
+		);
+	}
+});
+
+
+
 
 var Login = React.createClass ({
 	getInitialState() {
@@ -17,7 +51,8 @@ var Login = React.createClass ({
 			email: "",
 			password: "",
 			verify: "", 
-			show_modal: false
+			isError: false,
+			error_message: ""
 		};
 	},
 	updateEmail(event) {
@@ -38,13 +73,65 @@ var Login = React.createClass ({
 			verify: verify
 		});
 	},
+	showError (err) {
+		var message = "* ";
+		if (err == 'email')
+		{
+			message += "Your email is invalid";
+		}
+		else if (err == 'password')
+		{
+			message += "Please fill out a password";
+		}
+		else 
+		{
+			message += "Your password's don't match";
+		}
+		this.setState({
+			isError: true,
+			error_message: message
+		});
+	},
 	signUp () {
 		var email = this.state.email;
 		var password = this.state.password;
 		var verify = this.state.verify;
+		
+		if (!checkEmail(email))
+		{
+			this.showError("email");
+			console.log("error -- email");
+			return;
+		}
+		else {
+			this.setState({
+				isError: false
+			});
+		}
+		
+		if (password == "")
+		{
+			this.showError("password");
+		}
+		
+		if (!checkPasswords(password, verify))
+		{
+			this.showError("verify");
+			console.log("error -- password");
+			return;
+		}
+		else {
+			this.setState({
+				isError: false
+			});
+		}
+		
+		
 		console.log(this.state.email)
 		console.log(password)
 		console.log(verify)
+		$("#sign-up-popup").modal("hide");
+		alert("You Signed Up!")
 	},
 	render () { // remove a tag in button
 		var email = this.state.email;
@@ -69,7 +156,7 @@ var Login = React.createClass ({
 				</div>
 				</div>
 				
-				<div id="sign-up-popup" className={this.state.show_modal ? "modal" : ""} + " fade" role="dialog">
+				<div id="sign-up-popup" className="modal fade" role="dialog">
 				  <div className="modal-dialog">
 				
 				    <div className="modal-content">
@@ -86,6 +173,7 @@ var Login = React.createClass ({
 				        	<br /><br />
 				        	<input className="loginInput" placeholder="Verify Password" id="verify" value={verify} onChange={this.updateVerify} type="password"/>
 				      	</div>
+				      	{ this.state.isError ? <SignUpError message={this.state.error_message}/> : ""}
 				      </div>
 				      <br />
 				      <div className="modal-footer">

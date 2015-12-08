@@ -40,17 +40,6 @@ var Dashboard = React.createClass({
 			maxPrice: maxPrice
 		});
 		
-		this.requestAuctions(searchWord, minPrice, maxPrice);
-		
-		this.state.auctions.push(
-		{
-			title: searchWord + " Ebay auction",
-			description: "Product info",
-			num_ratings: 15,
-			cost: maxPrice,
-			thumbnail: "https://placehold.it/320x150",
-		});
-		
 		this.setState({
 			auctions: this.state.auctions,
 			items: this.state.items
@@ -58,16 +47,35 @@ var Dashboard = React.createClass({
 	},
 	
 	requestAuctions(searchWord, minPrice, maxPrice) {
-		console.log("trying.....");
 		var url = "https://svcs.ebay.com/services/search/FindingService/v1?SECURITY-APPNAME=Benjamin-55ac-42b1-9842-8431acf86287&OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.0.0&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&paginationInput.entriesPerPage=30";
+		var newAuctions = this.state.auctions;
+		newAuctions.push(
+		{
+			title: "hey",
+			description: "Product info",
+			num_ratings: 15,
+			cost: maxPrice,
+			thumbnail: "https://placehold.it/320x150",
+		});
 		$.ajax({
 			url: url,
 			dataType: "jsonp",
 			data: {keywords: searchWord},
 			success: function(data){
-				console.log(data);
+				for(var i in data.findItemsByKeywordsResponse[0].searchResult[0].item)
+				{
+					newAuctions.push(
+					{
+						title: data.findItemsByKeywordsResponse[0].searchResult[0].item[i].title[0],
+						description: "Product info",
+						num_ratings: 15,
+						cost: maxPrice,
+						thumbnail: "https://placehold.it/320x150",
+					});
+				}
 			}
 		})
+		this.state.auctions = newAuctions;
 	},
 	
 	render () {
