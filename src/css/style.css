@@ -57,30 +57,48 @@
 
 .aboutUsPerson {
     display: inline-block;
-    float: left;
+    width: 30%;
 }
 
-.searchInput {
+.aboutUsOuter {
+    display: inline-block;
+    width: 100%;
+}
+
+#searchInput {
     width: 100%;
     border: 1px solid #dadada;
     padding: 4px 12px;
     border-radius: 8px;
 }
 
-.searchInput:focus {
+#searchInput:focus {
     outline: none;
     border-color: #9ecaed;
     box-shadow: 0 0 10px #9ecaed;
 }
 
-.priceInput {
+#priceMin {
     border: 1px solid #dadada;
     padding: 4px 12px;
     border-radius: 8px;
     margin-right: 5px;
 }
 
-.priceInput:focus {
+#priceMin:focus {
+    outline: none;
+    border-color: #9ecaed;
+    box-shadow: 0 0 10px #9ecaed;
+}
+
+#priceMax {
+    border: 1px solid #dadada;
+    padding: 4px 12px;
+    border-radius: 8px;
+    margin-right: 5px;
+}
+
+#priceMax:focus {
     outline: none;
     border-color: #9ecaed;
     box-shadow: 0 0 10px #9ecaed;

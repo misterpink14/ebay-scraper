@@ -18,7 +18,7 @@ var SmallItem = React.createClass({
     render() {
         return (
         	<div>
-            	<a className="list-group-item" onClick={this.requestAuctions}>{this.props.name}</a>
+            	<a className="list-group-item" onClick={this.requestAuctions}>{this.props.name} <br/> From ${this.props.minPrice}  To  ${this.props.maxPrice}</a>
         	</div>
         );
     }
@@ -42,6 +42,11 @@ var AddItem = React.createClass({
 	},
 	
 	addItem () { // Update this to use react, lets try to use jquery for just requests. It'll make code cleaner/more readable
+		if($("#searchWord").val() == "" || $("#minPrice").val() == "" || $("#maxPrice").val() == "")
+		{
+			alert("Please Fill All Fields");
+			return;
+		}
 		$("#popup").modal("hide");
 		this.props.masterAddItem($("#searchWord").val(), $("#minPrice").val(), $("#maxPrice").val());
 		$('#searchWord').val("");
@@ -50,6 +55,7 @@ var AddItem = React.createClass({
 	},
 	
 	render() {
+		
 		var requestAuctions = this.props.requestAuctions;
 		var items = this.state.items.map(function(item) {
 			return <SmallItem name={item.searchWord} minPrice={item.minPrice} maxPrice={item.maxPrice} requestAuctions={requestAuctions}/>
@@ -75,12 +81,12 @@ var AddItem = React.createClass({
 				      </div>
 				      <div className="modal-body">
 				      	<div>
-				        	<input className="searchInput" placeholder="Search term" id="searchWord" type="text"/>
+				        	<input id="searchInput" className="form-control required" placeholder="Search term" id="searchWord" type="text"/>
 				        </div>
 				        <br />
 				        <div>
-				        	Price Range: <input className="priceInput" placeholder="Min Price" id="minPrice" type="number"/> 
-				        	 To <input className="priceInput" placeholder="Max Price" id="maxPrice" type="number"/>
+				        	Price Range: <input id="priceMin" className="form-control required" placeholder="Min Price" id="minPrice" type="number"/> 
+				        	 To <input id="priceMax" className="form-control required" placeholder="Max Price" id="maxPrice" type="number"/>
 				      	</div>
 				      </div>
 				      <div className="modal-footer">

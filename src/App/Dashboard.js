@@ -86,29 +86,34 @@ var Dashboard = React.createClass({
 		var auctions = this.state.auctions;
 		for(var i in data.findItemsByKeywordsResponse[0].searchResult[0].item)
 		{
-			if(data.findItemsByKeywordsResponse[0].searchResult[0].item[i].galleryURL == undefined)
-			{
-				auctions = auctions.concat([
-				{
-					title: data.findItemsByKeywordsResponse[0].searchResult[0].item[i].title[0],
-					description: "Product info",
-					num_ratings: 15,
-					cost: data.findItemsByKeywordsResponse[0].searchResult[0].item[i].sellingStatus[0].currentPrice[0].__value__,
-					thumbnail: "http://www.staticwhich.co.uk/static/images/products/no-image/no-image-available.png",
-					url: data.findItemsByKeywordsResponse[0].searchResult[0].item[i].viewItemURL[0]
-				}])
-			}
-			else{
-				auctions = auctions.concat([
-				{
+			var newAuction;
+			try{
+				newAuction = [{
 					title: data.findItemsByKeywordsResponse[0].searchResult[0].item[i].title[0],
 					description: "Product info",
 					num_ratings: 15,
 					cost: data.findItemsByKeywordsResponse[0].searchResult[0].item[i].sellingStatus[0].currentPrice[0].__value__,
 					thumbnail: data.findItemsByKeywordsResponse[0].searchResult[0].item[i].galleryURL[0],
 					url: data.findItemsByKeywordsResponse[0].searchResult[0].item[i].viewItemURL[0]
-				}])
+				}];
 			}
+			catch(e){
+				try{
+				newAuction = [{
+						title: data.findItemsByKeywordsResponse[0].searchResult[0].item[i].title[0],
+						description: "Product info",
+						num_ratings: 15,
+						cost: data.findItemsByKeywordsResponse[0].searchResult[0].item[i].sellingStatus[0].currentPrice[0].__value__,
+						thumbnail: "http://www.staticwhich.co.uk/static/images/products/no-image/no-image-available.png",
+						url: data.findItemsByKeywordsResponse[0].searchResult[0].item[i].viewItemURL[0]
+					}];
+				}
+				catch(e){
+					continue;
+				}
+			}
+			
+			auctions = auctions.concat(newAuction);
 		}
 		
 		this.setState({

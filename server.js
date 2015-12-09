@@ -189,6 +189,27 @@ router.put("/user", function(req, res) {
 });
 
 
+router.post("add-item", function(req, res) {
+	console.log(req.body);
+	
+	var email = req.body.email;
+	var password = req.body.password;
+	var item = req.body.item;
+	
+	
+	User.findOne(
+		{
+			'Username': email,
+			'Password': password
+		},
+		function (err, user) {
+			console.log(user);
+			
+		}
+	);
+});
+
+
 router.get('/Users', function(req, res, next) {
   User.find(function(err, data){
     if(err){ return next(err); }

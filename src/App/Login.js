@@ -175,6 +175,7 @@ var Login = React.createClass ({
 		var password = this.state.password;
 		
 		var url = "user";
+		var login = this.props.login;
 		$.ajax({
 			url: url,
 			type: "PUT",
@@ -183,17 +184,18 @@ var Login = React.createClass ({
 				password: password
 			},
 			success: function(data, err) {
+				console.log(err)
 				if (err.trim() != 'success')
 				{
 					return;
 				}
 				else
 				{
-					// isLoggedin = true;
+					login();
 					window.location.href = '#/dashboard';
 				}
 			}
-		});
+		}, login);
 		this.setState({
 			email: "",
 			password: "",

@@ -16,11 +16,11 @@ var AboutUs = React.createClass({
   render () {
 	return (
 		<div className="aboutUsImage">
-			<br /><br /><br /><br /><br /><br />
-			<div className="text-center col-md-4 col-md-offset-4">
+			<br /><br /><br />
+			<div className="text-center">
 				<h1>Our Team</h1>
 				<br />
-				<div>
+				<div className="aboutUsOuter">
 				<div className="aboutUsPerson">
 					<img className="profileImg" src="https://scontent-sjc2-1.xx.fbcdn.net/hphotos-ash2/v/t1.0-9/1014015_617913758276640_1410926177_n.jpg?oh=c297dec123b67000cceae09048014d4f&oe=56D8DE04"/>
 					<h4>Cody Burt</h4>
