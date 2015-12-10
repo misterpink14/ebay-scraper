@@ -20,18 +20,23 @@ import jquery from 'jquery';
 
 
 var Dashboard = React.createClass({
+	// Set the initial state (data) for the Dashboard
 	getInitialState () {
 		var user = this.props.getUser();
 		var items = [];
-		user.Items.forEach(function(item) {
-			items = items.concat([
-				{
-					searchWord: item.SearchWord,
-					minPrice: item.MinPrice,
-					maxPrice: item.MaxPrice
-				}
-			])
-		}, items)
+		if (user) {
+			user.Items.forEach(function(item) {
+				items = items.concat([
+					{
+						searchWord: item.SearchWord,
+						minPrice: item.MinPrice,
+						maxPrice: item.MaxPrice, 
+						listings: item.Listings
+					}
+				])
+			}, items)
+		}
+		
 		return {
 			user: {
 				Username: user.Username,
@@ -44,6 +49,11 @@ var Dashboard = React.createClass({
 		};
 	},
 	
+	/* 
+		When the AddItem component is clicked, it calls this function
+		Adds their new search to the db, makes an ajax call to the ebay api
+			and re-renders the ItemContainer with the data
+	*/
 	masterAddItem(searchWord, minPrice, maxPrice) {
 		
 		var searchParams = {
@@ -56,7 +66,7 @@ var Dashboard = React.createClass({
 			searchParams
 		);
 		
-		var data = {
+		var userData = {
 			Username: this.state.user.Username,
 			Password: this.state.user.Password,
 			Item: {
@@ -65,15 +75,13 @@ var Dashboard = React.createClass({
 				MaxPrice: maxPrice
 			}
 		}
-		console.log('before additem')
 		
 		// Add item to db here
 		$.post(
 			"addItem",
-			data,
+			userData,
 			function(data) {
-				console.log("add item success")
-				console.log(data)
+				
 				if (data.trim() != "OK") 
 				{
 					alert("An error occured, please try again");
@@ -88,6 +96,10 @@ var Dashboard = React.createClass({
 		}) // when is a async callback function
 	},
 	
+	/*
+		Called when a user clicks a small item (saved searched underneath Add Item)
+		Makes an ajax request and re-renders the ItemContainer with the data
+	*/
 	requestAuctions(searchWord, minPrice, maxPrice) {
 		this.state.auctions = [];
 		var displayAuctions = this.displayAuctions;
@@ -97,7 +109,9 @@ var Dashboard = React.createClass({
 		})
 	},
 	
-	//call to eBay API
+	/*
+	call to eBay API
+	*/
 	auctionRequest(searchWord, minPrice, maxPrice){ 
 		var displayAuctions = this.displayAuctions;
 		var url = "https://svcs.ebay.com/services/search/FindingService/v1?" + 
@@ -116,7 +130,7 @@ var Dashboard = React.createClass({
 					"RESPONSE-DATA-FORMAT=JSON&" + 
 					"REST-PAYLOAD&" +
 					"paginationInput.entriesPerPage=100&";
-		// Make the call to the ebay api and return the data (ajax automaticall returns what we need) -- this should probably be done differently
+		// Make the call to the ebay api and return the data (ajax automatically returns what we need) -- this should probably be done differently
 		return $.ajax({ 
 			type: "GET",
 			url: url,
@@ -127,6 +141,9 @@ var Dashboard = React.createClass({
 		}) // return to masterAddItem function -or- requestAuctions?
 	},
 	
+	/* 
+		Attepts to update the auctions data (used to render the Item Container)
+	*/
 	displayAuctions(data) {
 		console.log(data);
 		var auctions = this.state.auctions;
@@ -175,8 +192,10 @@ var Dashboard = React.createClass({
 		<div>
 			<div className="container">
 				<div className="row">
+					{/* Container for the left sidebar. Includes Add Item button and Small Items */}
 					<AddItem masterAddItem={this.masterAddItem} requestAuctions={this.requestAuctions} items={this.state.items}/>
 					<div className="col-md-9">
+						{/* Container for Items in main area of Dashboard */}
 						<ItemContainer auctions={this.state.auctions}/>
 					</div>
 				</div>
