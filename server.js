@@ -190,9 +190,11 @@ router.put("/user", function(req, res) {
 			console.log("user: " + user);
 			if (err || !user)
 			{
-				console.log("no")
-				res.end();
-				res.status(404).end();
+				console.log("no");
+				res.status(404).send("Incorrect");
+				return;
+				//res.end();
+				//res.status(404).end();
 			}
 			else 
 			{
@@ -263,19 +265,14 @@ router.put("/item", function(req, res) {
 			{
 				// update the user's Items and save
 				
-				for (var i = 0; i < user.Items.length)
+				for (var i = 0; i < user.Items.length; i++)
 				{
 					if (user.Items[i]._id == user._id)
 					{
-						user.Items
+						user.Items[i]._id == user;
 					}
 				}
-				// user.Items.push({ 
-			 //       SearchWord: item.SearchWord, 
-			 //       MinPrice: item.MinPrice, 
-			 //       MaxPrice: item.MaxPrice,
-			 //       Listings: []
-				// });
+				
 				user.save();
 				
 				// OK == success
@@ -375,7 +372,7 @@ router.get('/unreadListings',function(req, res, next) {
 							}
 						}
 						
-						if (found) 
+						if (! found) 
 						{
 							unreadListings.push(listingURLs[j]);
 						}

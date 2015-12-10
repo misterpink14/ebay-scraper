@@ -27,13 +27,12 @@ var SmallItem = React.createClass({
     render() {
         return (
         	<div>
-            	<a className="list-group-item" onClick={this.requestAuctions}>
-            		{this.props.name} 
-            		<a className="deleteButton" onclick={this.editItem}>Del</a>
-            		<div className="editButton" onclick={this.deleteItem}>Edit</div> 
+            	<div className="list-group-item" onClick={this.requestAuctions}>
+            		{this.props.name}
+            		<img className="x" src="http://sweetclipart.com/multisite/sweetclipart/files/x_mark_red.png" onClick={this.deleteItem}/>
             		<br/>
             		From ${this.props.minPrice}  To  ${this.props.maxPrice}
-            	</a>
+            	</div>
         	</div>
         );
     }

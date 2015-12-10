@@ -112,10 +112,8 @@ var Dashboard = React.createClass({
 		this.state.auctions = [];
 		var displayAuctions = this.displayAuctions;
 		$.when(this.auctionRequest(searchWord, minPrice, maxPrice)).done(function(data){
-			console.log("good stuff");
 			data.username = this.state.user.Username;
 			data.itemName = searchWord;
-			console.log(data);
 			displayAuctions(data);
 		}.bind(this))
 	},
@@ -199,14 +197,14 @@ var Dashboard = React.createClass({
 			listingURLs: listingURLs
 		};
 		
-		$.get(
-			"unreadListings",
-			unreadListingData,
-			function(data) {
-				console.log("server unread listings");
-				console.log(data);
-			}
-		);
+		// $.get(
+		// 	"unreadListings",
+		// 	unreadListingData,
+		// 	function(data) {
+		// 		console.log("server unread listings");
+		// 		console.log(data);
+		// 	}
+		// );
 		
 		
 		this.setState({

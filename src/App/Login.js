@@ -181,6 +181,12 @@ var Login = React.createClass ({
 			success: function(data, err) {
 				if (err.trim() != 'success' || !data)
 				{
+					console.log(err);
+					console.log(data);
+					this.setState( {
+						isError: true,
+						error_message: "No user found"
+					});
 					return;
 				}
 				else
@@ -195,6 +201,14 @@ var Login = React.createClass ({
 					
 					window.location.href = '#';
 				}
+			}.bind(this),
+			
+			error: function (textStatus, errorThrown) {
+				this.setState( {
+						isError: true,
+						error_message: "No user found"
+					});
+					return;
 			}.bind(this)
 		});
 	},
@@ -213,8 +227,9 @@ var Login = React.createClass ({
 					<input className="loginInput" placeholder="Email" type="text" value={email} onChange={this.updateEmail} /><br /><br />
 					<input className="loginInput" placeholder="Password" type="password" value={password} onChange={this.updatePassword} /><br /><br />
 					<button type="submit" className="btn btn-primary loginButton" onClick={this.login}>
-						<a href="#" className="white">Log in to your account</a>
+						<span className="white">Log in to your account</span>
 					</button><br />
+					{ this.state.isError ? <SignUpError message={this.state.error_message}/> : ""}
 				</div>
 				<br /><br /><br />
 				<div className="text-center orSignUp col-md-4 col-md-offset-4">
