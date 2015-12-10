@@ -1,10 +1,7 @@
 /*
 
 TODO
-	[] Make it so you can only go to the dashboard when logged in.
-	[] Pass user data to dashboard
-	[] Hash/salt the password
-	[] Don't make pointless things go through the ajax
+	[]
 
 */
 
@@ -174,36 +171,31 @@ var Login = React.createClass ({
 		var email = this.state.email;
 		var password = this.state.password;
 		
-		var url = "user";
-		var login = this.props.login;
-		var saveUser = this.props.saveUser;
 		$.ajax({
-			url: url,
+			url: "user",
 			type: "PUT",
 			data: {
 				email: email,
 				password: password
 			},
 			success: function(data, err) {
-				console.log(err)
-				console.log(data)
 				if (err.trim() != 'success' || !data)
 				{
-					
 					return;
 				}
 				else
 				{
-					login();
-					saveUser(data);
+					this.props.login();
+					this.props.saveUser(data);
+					this.setState({
+						email: "",
+						password: "",
+						verify: ""
+					});
+					
 					window.location.href = '#';
 				}
-			}
-		}, login, saveUser);
-		this.setState({
-			email: "",
-			password: "",
-			verify: ""
+			}.bind(this)
 		});
 	},
 	

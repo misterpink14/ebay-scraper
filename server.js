@@ -1,13 +1,9 @@
 /*
 
 TODO
-	[x] Get mongo/mongoose working 
-		[x] Basic setup
-		[x] Add user object -- reference => mongoosejs.com/docs/index.html
-		[x] Add item object -- pick a better name than item
-	[] Add endpoints for
-		[] Saved items
-	[] Implement password security
+	[]
+
+WISHLIST
 	[] Use socketio instead of express
 		
 

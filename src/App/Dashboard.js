@@ -1,6 +1,8 @@
 /*
+
 TODO
-	[] Function for updating itemcontainer when item is updated (after popup todo in additem)
+	[] 
+
 */
 
 
@@ -24,8 +26,10 @@ var Dashboard = React.createClass({
 	getInitialState () {
 		var user = this.props.getUser();
 		var items = [];
-		if (user) {
-			user.Items.forEach(function(item) {
+		if (Object.keys(user).length != 0) // Make sure the object is not empty
+		{
+			user.Items.forEach(function(item) 
+			{
 				items = items.concat([
 					{
 						searchWord: item.SearchWord,
@@ -90,10 +94,14 @@ var Dashboard = React.createClass({
 		);
 		
 		this.state.auctions = []; // Reset the auctions -- auctions are the results from ebay's api
-		var displayAuctions = this.displayAuctions; // cast the function displayAuctions to a variable 
-		$.when(this.auctionRequest(searchWord, minPrice, maxPrice)).done(function(data){
+		var displayAuctions = this.displayAuctions; // cast the function displayAuctions to a variable
+		
+		$.when( // when is a async callback function
+			this.auctionRequest(searchWord, minPrice, maxPrice)
+		).done(function(data)
+		{
 			displayAuctions(data); // we should just be able to call this.displayAuctions() -- but this is called after the auctionRequest finishes
-		}) // when is a async callback function
+		}) 
 	},
 	
 	/*

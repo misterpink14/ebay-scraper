@@ -1,8 +1,7 @@
 /*
 
 	TODO:
-	
-		[ben] figure out auth
+		[]
 
 */
 
@@ -21,9 +20,7 @@ import App from './App.js';
 /* Local data */
 var isLoggedin = false;
 
-var user = {
-	name: "me"
-};
+var user = {};
 
 function getUser() {
 	return user;
@@ -35,15 +32,25 @@ function saveUser(newUser) {
 
 function login() {
 	isLoggedin = true;
+	console.log("login")
+	console.log(isLoggedin)
+}
+
+function logout() {
+	user = {};
+	isLoggedin = false;
 }
 
 function requireAuth(nextState, replaceState) 
 {
-	console.log("here")
 	if(!isLoggedin)
 	{
 		window.location.href = '#/login';
 	}
+}
+
+function loggedIn() {
+	return isLoggedin;
 }
 
 
@@ -72,7 +79,6 @@ var DashboardWrapper = React.createClass({
 	},
 	
 	getUser() {
-		console.log("geuser")
 		return getUser();
 	},
 	
@@ -82,11 +88,31 @@ var DashboardWrapper = React.createClass({
 })
 
 
+var AppWrapper = React.createClass({
+	
+	logout () {
+		logout()	
+	},
+	
+	getUser() {
+		return getUser();
+	},
+	
+	isLoggedin () {
+		loggedIn()
+	},
+
+	render () {
+		return <App logout={this.logout} getUser={this.getUser} isLoggedin={this.isLoggedin} children={this.props.children}/>
+	}
+})
+
+
 
 // Run the routes --- there is an attribute of route called onEnter < then you can add some kind of auth
 var routes = (
 	<Router>
-		<Route name="app" path="/" component={App}>
+		<Route name="app" path="/" component={AppWrapper} >
 			<IndexRoute component={DashboardWrapper} onEnter={requireAuth} />
 			<Route name="page" path="/about-us" component={AboutUs} />
 			<Route name="dashboard" path="/login" component={LoginWrapper}  />

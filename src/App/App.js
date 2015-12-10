@@ -1,3 +1,11 @@
+/*
+
+TODO:
+	[] hide the logout button when not logged in
+
+*/
+
+
 /* React Dependancies */
 import React from 'react';
 import { Link } from 'react-router';
@@ -6,19 +14,14 @@ import { Link } from 'react-router';
 
 var App = React.createClass({
 	
-	getInitialState() {
-		return {
-			isLogin: false
-		}	
+	logout() {
+		this.props.logout()
 	},
 	
-	login () {
-		this.setState({
-			isLogin: true
-		})
-	}, 
-	
 	render () {
+		
+		var isLoggedIn = Object.keys(this.props.getUser()).length > 0;
+		
 		return (
 			<div>
 				<nav className="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -38,7 +41,7 @@ var App = React.createClass({
 									<a href="#/about-us">About</a>
 								</li>
 							</ul>
-							{ this.state.isLogin ? <a id="logoutButton" href="#/login" className="navbar-brand">logout</a> : <span></span> }
+							{ isLoggedIn ? <a id="logoutButton" href="#/login" onClick={this.logout} className="navbar-brand">logout</a>: ""}
 						</div>
 					</div>
 				</nav>
