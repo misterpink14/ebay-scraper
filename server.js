@@ -1,9 +1,13 @@
 /*
 
 TODO
-	[]
-
-WISHLIST
+	[x] Get mongo/mongoose working 
+		[x] Basic setup
+		[x] Add user object -- reference => mongoosejs.com/docs/index.html
+		[x] Add item object -- pick a better name than item
+	[] Add endpoints for
+		[] Saved items
+	[] Implement password security
 	[] Use socketio instead of express
 		
 
@@ -197,7 +201,7 @@ router.put("/user", function(req, res) {
 });
 
 
-router.post("/addItem", function(req, res) {
+router.post("/item", function(req, res) {
 	
 	var username = req.body.Username;
 	var password = req.body.Password;
@@ -227,7 +231,81 @@ router.post("/addItem", function(req, res) {
 				user.save();
 				
 				// OK == success
-				res.send("OK\n");
+				res.json(user);
+			}
+		}, item // pass item into the callback function
+	);
+});
+
+
+router.put("/item", function(req, res) {
+	
+	var username = req.body.Username;
+	var password = req.body.Password;
+	var item = req.body.Item;
+	
+	User.findOne(
+		{
+			'Username': username,
+			'Password': password
+		},
+		function (err, user) {
+			
+			if (err || !user)
+			{
+				res.end();
+				res.status(404).end();
+			}
+			else 
+			{
+				// update the user's Items and save
+				user.Items.push({ 
+			        SearchWord: item.SearchWord, 
+			        MinPrice: item.MinPrice, 
+			        MaxPrice: item.MaxPrice,
+			        Listings: []
+				});
+				user.save();
+				
+				// OK == success
+				res.json(user);
+			}
+		}, item // pass item into the callback function
+	);
+});
+
+
+router.delete("/item", function(req, res) {
+	
+	var username = req.body.Username;
+	var password = req.body.Password;
+	var item = req.body.Item;
+	
+	User.findOne(
+		{
+			'Username': username,
+			'Password': password
+		},
+		function (err, user) {
+			
+			if (err || !user)
+			{
+				res.end();
+				res.status(404).end();
+			}
+			else 
+			{
+				// update the user's Items and save
+				user.Items.push({ 
+			        SearchWord: item.SearchWord, 
+			        MinPrice: item.MinPrice, 
+			        MaxPrice: item.MaxPrice,
+			        Listings: []
+				});
+				user.save();
+				
+				// OK == success
+				res.json(user);
 			}
 		}, item // pass item into the callback function
 	);
@@ -242,9 +320,9 @@ router.get('/Users', function(req, res, next) {
 });
 
 
-router.get('/newListings',function(req, res, next) {
+router.get('/unreadListings',function(req, res, next) {
 	
-	var email = req.body.email;
+	var username = req.body.username;
 	var itemName = req.body.itemName;
 	var listingURLs = req.body.listingURLs;
 	
@@ -253,7 +331,7 @@ router.get('/newListings',function(req, res, next) {
 	
 	User.findOne(
 	{
-		'Username': email,
+		'Username': username,
 	},
 	function (err, user) 
 	{
@@ -264,15 +342,19 @@ router.get('/newListings',function(req, res, next) {
 		}
 		else 			
 		{
-			//listings the user has already seen
-			var listings = user.listings;
+			//items the user owns
+			var items = user.Items;
 			
-			for (var i = 0, len = listingURLs.length; i < len; i++)
+			for (var i = 0; i < items.length; i++)
 			{
-				//if this listing is not already in the user's list
-				if (listings.indexOf(listingURLs[i]) == -1)
+				if (items[i].SearchWord == itemName)
 				{
-					unreadListings.push(listingURLs[i])
+					var listings = items[i].Listings;
+					
+					for (var j = 0, len = items[i].listings.length; j < len; j++)
+					{
+						if ()
+					}
 				}
 				
 			}

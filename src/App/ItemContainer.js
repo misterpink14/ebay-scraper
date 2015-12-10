@@ -1,7 +1,7 @@
 /*
 
 TODO
-	[] Figure out why images arent rendering
+	[] 
 
 */
 
@@ -21,7 +21,7 @@ var Auction = React.createClass ({
 					<img src={this.props.thumbnail} alt="" />
 					<div className="caption">
 						<h4>${this.props.cost}</h4>
-						<h4><a href={this.props.url}>{this.props.title}</a>
+						<h4><a href={this.props.url} target="_blank">{this.props.title}</a>
 						</h4>
 					</div>
 				</div>

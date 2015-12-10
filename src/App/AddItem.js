@@ -16,10 +16,24 @@ var SmallItem = React.createClass({
 		this.props.requestAuctions(this.props.name, this.props.minPrice, this.props.maxPrice);
 	},
 	
+	editItem() {
+		console.log("Item Edited");
+	},
+	
+	deleteItem() {
+		console.log("Item Deleted");
+	},
+	
     render() {
         return (
         	<div>
-            	<a className="list-group-item" onClick={this.requestAuctions}>{this.props.name} <br/> From ${this.props.minPrice}  To  ${this.props.maxPrice}</a>
+            	<a className="list-group-item" onClick={this.requestAuctions}>
+            		{this.props.name} 
+            		<div className="deleteButton" onclick={this.editItem}>Del</div>
+            		<div className="editButton" onclick={this.deleteItem}>Edit</div> 
+            		<br/>
+            		From ${this.props.minPrice}  To  ${this.props.maxPrice}
+            	</a>
         	</div>
         );
     }

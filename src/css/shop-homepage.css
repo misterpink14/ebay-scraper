@@ -60,3 +60,22 @@ footer {
     background-color: #98CC96;
     cursor: pointer;
 }
+
+.editButton {
+    display: inline-block;
+    float: right;
+    padding-right: 10px;
+}
+
+.editButton:hover {
+    
+}
+
+.deleteButton {
+    display: inline-block;
+    float: right;
+}
+
+.deleteButton:hover {
+    
+}

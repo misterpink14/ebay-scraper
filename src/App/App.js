@@ -1,7 +1,7 @@
 /*
 
 TODO:
-	[] hide the logout button when not logged in
+	[] 
 
 */
 
@@ -20,7 +20,7 @@ var App = React.createClass({
 	
 	render () {
 		
-		var isLoggedIn = Object.keys(this.props.getUser()).length > 0;
+		var isLoggedIn = Object.keys(this.props.getUser()).length > 0; // for showing the logout button
 		
 		return (
 			<div>
@@ -38,7 +38,7 @@ var App = React.createClass({
 						<div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 							<ul className="nav navbar-nav">
 								<li>
-									<a href="#/about-us">About</a>
+									<a href="#/about-us">About us</a>
 								</li>
 							</ul>
 							{ isLoggedIn ? <a id="logoutButton" href="#/login" onClick={this.logout} className="navbar-brand">logout</a>: ""}

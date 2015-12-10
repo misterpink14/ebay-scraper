@@ -82,11 +82,11 @@ var Dashboard = React.createClass({
 		
 		// Add item to db here
 		$.post(
-			"addItem",
+			"item",
 			userData,
 			function(data) {
 				
-				if (data.trim() != "OK") 
+				if (!data.trim()) 
 				{
 					alert("An error occured, please try again");
 				}
@@ -113,8 +113,11 @@ var Dashboard = React.createClass({
 		var displayAuctions = this.displayAuctions;
 		$.when(this.auctionRequest(searchWord, minPrice, maxPrice)).done(function(data){
 			console.log("good stuff");
+			data.username = this.state.user.Username;
+			data.itemName = searchWord;
+			console.log(data);
 			displayAuctions(data);
-		})
+		}.bind(this))
 	},
 	
 	/*
@@ -153,8 +156,10 @@ var Dashboard = React.createClass({
 		Attepts to update the auctions data (used to render the Item Container)
 	*/
 	displayAuctions(data) {
+		console.log("displayAuctions data");
 		console.log(data);
 		var auctions = this.state.auctions;
+		var listingURLs = [];
 		for(var i in data.findItemsByKeywordsResponse[0].searchResult[0].item)
 		{
 			var newAuction;
@@ -167,6 +172,7 @@ var Dashboard = React.createClass({
 					thumbnail: data.findItemsByKeywordsResponse[0].searchResult[0].item[i].galleryURL[0],
 					url: data.findItemsByKeywordsResponse[0].searchResult[0].item[i].viewItemURL[0]
 				}];
+				listingURLs.push(data.findItemsByKeywordsResponse[0].searchResult[0].item[i].viewItemURL[0]);
 			}
 			catch(e){
 				try{
@@ -186,6 +192,22 @@ var Dashboard = React.createClass({
 			
 			auctions = auctions.concat(newAuction);
 		}
+		
+		var unreadListingData = {
+			username: data.username,
+			itemName: data.itemName,
+			listingURLs: listingURLs
+		};
+		
+		$.get(
+			"unreadListings",
+			unreadListingData,
+			function(data) {
+				console.log("server unread listings");
+				console.log(data);
+			}
+		);
+		
 		
 		this.setState({
 			auctions: auctions

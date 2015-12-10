@@ -213,7 +213,7 @@ var Login = React.createClass ({
 					<input className="loginInput" placeholder="Email" type="text" value={email} onChange={this.updateEmail} /><br /><br />
 					<input className="loginInput" placeholder="Password" type="password" value={password} onChange={this.updatePassword} /><br /><br />
 					<button type="submit" className="btn btn-primary loginButton" onClick={this.login}>
-						<a href="#/dashboard" className="white">Log in to your account</a>
+						<a href="#" className="white">Log in to your account</a>
 					</button><br />
 				</div>
 				<br /><br /><br />
