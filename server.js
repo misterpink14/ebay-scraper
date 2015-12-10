@@ -146,6 +146,8 @@ server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function()
 	console.log("Chat server listening at", addr.address + ":" + addr.port);
 });
 
+
+/* Add user */
 router.post("/user",function(request, response){
 	console.log(request.body)
 	
@@ -171,7 +173,7 @@ router.post("/user",function(request, response){
 	});
 });
 
-
+/* Update user */
 router.put("/user", function(req, res) {
 	console.log(req.body);
 	var email = req.body.email;
@@ -200,7 +202,7 @@ router.put("/user", function(req, res) {
 	);
 });
 
-
+/* Add item */ 
 router.post("/item", function(req, res) {
 	
 	var username = req.body.Username;
@@ -238,6 +240,7 @@ router.post("/item", function(req, res) {
 });
 
 
+/* Update Item */
 router.put("/item", function(req, res) {
 	
 	var username = req.body.Username;
@@ -259,12 +262,20 @@ router.put("/item", function(req, res) {
 			else 
 			{
 				// update the user's Items and save
-				user.Items.push({ 
-			        SearchWord: item.SearchWord, 
-			        MinPrice: item.MinPrice, 
-			        MaxPrice: item.MaxPrice,
-			        Listings: []
-				});
+				
+				for (var i = 0; i < user.Items.length)
+				{
+					if (user.Items[i]._id == user._id)
+					{
+						user.Items
+					}
+				}
+				// user.Items.push({ 
+			 //       SearchWord: item.SearchWord, 
+			 //       MinPrice: item.MinPrice, 
+			 //       MaxPrice: item.MaxPrice,
+			 //       Listings: []
+				// });
 				user.save();
 				
 				// OK == success
@@ -275,6 +286,7 @@ router.put("/item", function(req, res) {
 });
 
 
+/* Delete Item */
 router.delete("/item", function(req, res) {
 	
 	var username = req.body.Username;
@@ -351,10 +363,25 @@ router.get('/unreadListings',function(req, res, next) {
 				{
 					var listings = items[i].Listings;
 					
-					for (var j = 0, len = items[i].listings.length; j < len; j++)
+					for (var j = 0; j < listingURLs.length; j++)
 					{
-						if ()
+						var found = false;
+						
+						for (var k = 0, len = items[i].Listings; k < len; k++)
+						{
+							if (listingURLs[j] == items[i].Listings[k].ListingURL)
+							{
+								found = true;
+							}
+						}
+						
+						if (found) 
+						{
+							unreadListings.push(listingURLs[j]);
+						}
 					}
+					
+					break;
 				}
 				
 			}

@@ -64,18 +64,21 @@ footer {
 .editButton {
     display: inline-block;
     float: right;
-    padding-right: 10px;
+    padding-right: 5px;
+    padding-left: 5px;
 }
 
 .editButton:hover {
-    
+    background-color: lightblue;
 }
 
 .deleteButton {
     display: inline-block;
     float: right;
+    padding-right: 5px;
+    padding-left: 5px;
 }
 
 .deleteButton:hover {
-    
+    background-color: lightblue;
 }

@@ -29,7 +29,7 @@ var SmallItem = React.createClass({
         	<div>
             	<a className="list-group-item" onClick={this.requestAuctions}>
             		{this.props.name} 
-            		<div className="deleteButton" onclick={this.editItem}>Del</div>
+            		<a className="deleteButton" onclick={this.editItem}>Del</a>
             		<div className="editButton" onclick={this.deleteItem}>Edit</div> 
             		<br/>
             		From ${this.props.minPrice}  To  ${this.props.maxPrice}
