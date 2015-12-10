@@ -176,6 +176,7 @@ var Login = React.createClass ({
 		
 		var url = "user";
 		var login = this.props.login;
+		var saveUser = this.props.saveUser;
 		$.ajax({
 			url: url,
 			type: "PUT",
@@ -185,17 +186,20 @@ var Login = React.createClass ({
 			},
 			success: function(data, err) {
 				console.log(err)
-				if (err.trim() != 'success')
+				console.log(data)
+				if (err.trim() != 'success' || !data)
 				{
+					
 					return;
 				}
 				else
 				{
 					login();
-					window.location.href = '#/dashboard';
+					saveUser(data);
+					window.location.href = '#';
 				}
 			}
-		}, login);
+		}, login, saveUser);
 		this.setState({
 			email: "",
 			password: "",

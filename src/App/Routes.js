@@ -39,11 +39,10 @@ function login() {
 
 function requireAuth(nextState, replaceState) 
 {
+	console.log("here")
 	if(!isLoggedin)
 	{
-		replaceState({ 
-			nextPathname: nextState.location.pathname
-		}, '#')
+		window.location.href = '#/login';
 	}
 }
 
@@ -52,12 +51,16 @@ function requireAuth(nextState, replaceState)
 /* Wrappers -- http://stackoverflow.com/questions/27864720/react-router-pass-props-to-handler-component */
 var LoginWrapper = React.createClass({
 	
+	saveUser(user) {
+		saveUser(user);
+	},
+	
 	login() {
 		login()	
 	},
 	
 	render() {
-		return <Login login={this.login}/>
+		return <Login login={this.login} saveUser={this.saveUser} />
 	}
 });
 
@@ -84,9 +87,9 @@ var DashboardWrapper = React.createClass({
 var routes = (
 	<Router>
 		<Route name="app" path="/" component={App}>
-			<IndexRoute component={LoginWrapper} />
+			<IndexRoute component={DashboardWrapper} onEnter={requireAuth} />
 			<Route name="page" path="/about-us" component={AboutUs} />
-			<Route name="dashboard" path="/dashboard" component={DashboardWrapper} onEnter={requireAuth} />
+			<Route name="dashboard" path="/login" component={LoginWrapper}  />
 		</Route>
 	</Router>
 );

@@ -50,6 +50,8 @@ const compiler = webpack(config); // compile
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/ebay');
 var User = require("./models/User");
+import Item from "./models/User"; // var Item = require("./models/User");
+var Listing = require("./models/User");
 
 router.use(express.static(path.resolve(__dirname, 'public')));
 router.use(webpackMiddleware(compiler)); 
@@ -153,7 +155,7 @@ router.post("/user",function(request, response){
     var newUser = new User({ 
     	Username: email, 
 	    Password: password, 
-	    Items: [] 
+	    Items: []
     });
 	newUser.save(function (err) {
 	  if (err)
@@ -182,30 +184,56 @@ router.put("/user", function(req, res) {
 			'Password': password
 		},
 		function (err, user) {
-			console.log(user);
-			res.json(user);
+			console.log("err: " + err);
+			console.log("user: " + user);
+			if (err || !user)
+			{
+				console.log("no")
+				res.end();
+				res.status(404).end();
+			}
+			else 
+			{
+				res.json(user);
+			}
 		}
 	);
 });
 
 
-router.post("add-item", function(req, res) {
-	console.log(req.body);
+router.post("/addItem", function(req, res) {
 	
-	var email = req.body.email;
-	var password = req.body.password;
-	var item = req.body.item;
-	
+	var username = req.body.Username;
+	var password = req.body.Password;
+	var item = req.body.Item;
 	
 	User.findOne(
 		{
-			'Username': email,
+			'Username': username,
 			'Password': password
 		},
 		function (err, user) {
-			console.log(user);
 			
-		}
+			if (err || !user)
+			{
+				res.end();
+				res.status(404).end();
+			}
+			else 
+			{
+				// update the user's Items and save
+				user.Items.push({ 
+			        SearchWord: item.SearchWord, 
+			        MinPrice: item.MinPrice, 
+			        MaxPrice: item.MaxPrice,
+			        Listings: []
+				});
+				user.save();
+				
+				// OK == success
+				res.send("OK\n");
+			}
+		}, item // pass item into the callback function
 	);
 });
 
@@ -215,4 +243,54 @@ router.get('/Users', function(req, res, next) {
     if(err){ return next(err); }
     res.json(data);
   });
+});
+
+
+router.get('/newListings',function(req, res, next) {
+	
+	var email = req.body.email;
+	var itemName = req.body.itemName;
+	var listingURLs = req.body.listingURLs;
+	
+	//listings that have appeared since the user last looked
+	var unreadListings = [];
+	
+	User.findOne(
+	{
+		'Username': email,
+	},
+	function (err, user) 
+	{
+		if (err || !user)
+		{
+			res.end();
+			res.status(404).end();
+		}
+		else 			
+		{
+			//listings the user has already seen
+			var listings = user.listings;
+			
+			for (var i = 0, len = listingURLs.length; i < len; i++)
+			{
+				//if this listing is not already in the user's list
+				if (listings.indexOf(listingURLs[i]) == -1)
+				{
+					unreadListings.push(listingURLs[i])
+				}
+				
+			}
+			
+			res.json(unreadListings);
+			
+			// Listings.find({"Username": email, "Itemname": itemName, "ListingURL": listingURL}, function(err, listingMatch) 
+			// {
+	  //  		if(err)
+	  //  		{ 
+	  //  			return next(err); 
+	  //  		}
+	  //  		res.json(data);
+			// });
+		}		
+	});
 });

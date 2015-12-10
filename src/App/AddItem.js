@@ -9,8 +9,9 @@ TODO
 var React = require('react');
 
 
-var SmallItem = React.createClass({
-	requestAuctions () {
+/* The small clickable item on the left sidebar */
+var SmallItem = React.createClass({ 
+	requestAuctions () { // upon clicking, make a new ajax request for that data and repopulate the item container
 		//TODO: get searchword, minprice, and maxprice from the database to pass into requestAuctions....
 		this.props.requestAuctions(this.props.name, this.props.minPrice, this.props.maxPrice);
 	},

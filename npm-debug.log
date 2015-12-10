@@ -11,7 +11,7 @@
 7 verbose unsafe-perm in lifecycle true
 8 info es6@1.0.0 Failed to exec server script
 9 verbose stack Error: es6@1.0.0 server: `PORT=8080 node server-babelified.js `
-9 verbose stack Exit status 137
+9 verbose stack Exit status 1
 9 verbose stack     at EventEmitter.<anonymous> (/home/ubuntu/.nvm/versions/node/v4.1.1/lib/node_modules/npm/lib/utils/lifecycle.js:214:16)
 9 verbose stack     at emitTwo (events.js:87:13)
 9 verbose stack     at EventEmitter.emit (events.js:172:7)
@@ -28,7 +28,7 @@
 15 error npm  v2.14.4
 16 error code ELIFECYCLE
 17 error es6@1.0.0 server: `PORT=8080 node server-babelified.js `
-17 error Exit status 137
+17 error Exit status 1
 18 error Failed at the es6@1.0.0 server script 'PORT=8080 node server-babelified.js '.
 18 error This is most likely a problem with the es6 package,
 18 error not with npm itself.

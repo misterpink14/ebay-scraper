@@ -21,9 +21,24 @@ import jquery from 'jquery';
 
 var Dashboard = React.createClass({
 	getInitialState () {
+		var user = this.props.getUser();
+		var items = [];
+		user.Items.forEach(function(item) {
+			items = items.concat([
+				{
+					searchWord: item.SearchWord,
+					minPrice: item.MinPrice,
+					maxPrice: item.MaxPrice
+				}
+			])
+		}, items)
 		return {
+			user: {
+				Username: user.Username,
+				Password: user.Password
+			},
 			loggedIn: false,
-			items: [],
+			items: items,
 			auctions: [],
 			popup: <div></div>
 		};
@@ -31,29 +46,59 @@ var Dashboard = React.createClass({
 	
 	masterAddItem(searchWord, minPrice, maxPrice) {
 		
-		this.state.items.push(
-		{
+		var searchParams = {
 			searchWord: searchWord,
 			minPrice: minPrice,
 			maxPrice: maxPrice
-		});
+		};
+		// Set the search params for call to ebay api
+		this.state.items.push(
+			searchParams
+		);
 		
-		this.state.auctions = [];
-		var displayAuctions = this.displayAuctions;
+		var data = {
+			Username: this.state.user.Username,
+			Password: this.state.user.Password,
+			Item: {
+				SearchWord: searchWord,
+				MinPrice: minPrice,
+				MaxPrice: maxPrice
+			}
+		}
+		console.log('before additem')
+		
+		// Add item to db here
+		$.post(
+			"addItem",
+			data,
+			function(data) {
+				console.log("add item success")
+				console.log(data)
+				if (data.trim() != "OK") 
+				{
+					alert("An error occured, please try again");
+				}
+			}
+		);
+		
+		this.state.auctions = []; // Reset the auctions -- auctions are the results from ebay's api
+		var displayAuctions = this.displayAuctions; // cast the function displayAuctions to a variable 
 		$.when(this.auctionRequest(searchWord, minPrice, maxPrice)).done(function(data){
-			displayAuctions(data);
-		})
+			displayAuctions(data); // we should just be able to call this.displayAuctions() -- but this is called after the auctionRequest finishes
+		}) // when is a async callback function
 	},
 	
 	requestAuctions(searchWord, minPrice, maxPrice) {
 		this.state.auctions = [];
 		var displayAuctions = this.displayAuctions;
 		$.when(this.auctionRequest(searchWord, minPrice, maxPrice)).done(function(data){
+			console.log("good stuff");
 			displayAuctions(data);
 		})
 	},
 	
-	auctionRequest(searchWord, minPrice, maxPrice){
+	//call to eBay API
+	auctionRequest(searchWord, minPrice, maxPrice){ 
 		var displayAuctions = this.displayAuctions;
 		var url = "https://svcs.ebay.com/services/search/FindingService/v1?" + 
 					"SECURITY-APPNAME=Benjamin-55ac-42b1-9842-8431acf86287&" +
@@ -71,14 +116,15 @@ var Dashboard = React.createClass({
 					"RESPONSE-DATA-FORMAT=JSON&" + 
 					"REST-PAYLOAD&" +
 					"paginationInput.entriesPerPage=100&";
-		return $.ajax({
+		// Make the call to the ebay api and return the data (ajax automaticall returns what we need) -- this should probably be done differently
+		return $.ajax({ 
 			type: "GET",
 			url: url,
 			dataType: "jsonp",
 			data: {keywords: searchWord},
 			success: (function(data){
 			})
-		}) 
+		}) // return to masterAddItem function -or- requestAuctions?
 	},
 	
 	displayAuctions(data) {
@@ -122,6 +168,9 @@ var Dashboard = React.createClass({
 	},
 	
 	render () {
+		
+		console.log(this.props.getUser());
+		
 		return (
 		<div>
 			<div className="container">
@@ -132,6 +181,7 @@ var Dashboard = React.createClass({
 					</div>
 				</div>
 			</div>
+			
 			<div className="container">
 				<hr/>
 				<Footer />

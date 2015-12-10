@@ -38,7 +38,7 @@ var App = React.createClass({
 									<a href="#/about-us">About</a>
 								</li>
 							</ul>
-							{ this.state.isLogin ? <a id="logoutButton" href="#" className="navbar-brand">logout</a> : <span></span> }
+							{ this.state.isLogin ? <a id="logoutButton" href="#/login" className="navbar-brand">logout</a> : <span></span> }
 						</div>
 					</div>
 				</nav>
