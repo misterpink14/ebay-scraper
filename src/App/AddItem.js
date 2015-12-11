@@ -34,7 +34,6 @@ var SmallItem = React.createClass({
     }
 });
 
-
 var AddItem = React.createClass({
 	getInitialState () {
 		var items;
@@ -64,11 +63,6 @@ var AddItem = React.createClass({
 		$('#maxPrice').val("");
 	},
 	
-	// deleteItem(searchWord, minPrice, maxPrice) {
-	// 	console.log("")
-	// 	this.props.deleteItem(searchWord, minPrice, maxPrice);
-	// },
-	
 	render() {
 		
 		var requestAuctions = this.props.requestAuctions;
@@ -81,7 +75,7 @@ var AddItem = React.createClass({
 			<br />
 				<p className="lead">Items</p>
 				<div id="itemList" className="list-group">
-					<button className="btn btn-success" type="button" data-toggle="modal" data-target="#popup">Add Item</button>
+					<button className="btn btn-success" type="button" data-toggle="modal" data-target="#popup">New Search</button>
 				</div>
 				<div id='items'>
 				{items}
@@ -93,7 +87,7 @@ var AddItem = React.createClass({
 				    <div className="modal-content">
 				      <div className="modal-header">
 				        <button type="button" className="close" data-dismiss="modal">&times;</button>
-				        <h4 className="modal-title">Add New Item</h4>
+				        <h4 className="modal-title">Add New Search</h4>
 				      </div>
 				      <div className="modal-body">
 				      	<div>

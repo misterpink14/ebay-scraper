@@ -14,6 +14,7 @@ import React from 'react';
 import AddItem from './AddItem.js';
 import Footer from './Footer.js';
 import ItemContainer from './ItemContainer.js';
+import Instructions from './Instructions.js';
 
 /* jQuery */
 import $ from 'jquery';
@@ -105,7 +106,7 @@ var Dashboard = React.createClass({
 	},
 	
 	/*
-		Called when a user clicks a small item (saved searched underneath Add Item)
+		Called when a user clicks a small item (saved searched underneath New Search)
 		Makes an ajax request and re-renders the ItemContainer with the data
 	*/
 	requestAuctions(searchWord, minPrice, maxPrice) {
@@ -129,12 +130,34 @@ var Dashboard = React.createClass({
 			minPrice: minPrice, 
 			maxPrice: maxPrice
 		}
-		console.log(data);
+		var items = this.state.items;
+		
 		$.ajax({
 			url: 'item',
 			method: 'DELETE', 
-			data: data
-		});
+			data: data,
+			success: function(data){
+				this.removeFromItems(data);
+			}.bind(this),
+		})
+			
+	},
+	
+	removeFromItems(data) {
+		for (var i = 0; i < this.state.items.length; i++)
+				{
+					if ( this.state.items[i].SearchWord == this.state.name &&
+							this.state.items[i].MinPrice == data.minPrice &&
+							this.state.items[i].MaxPrice == data.maxPrice )
+					{
+						this.state.items.splice(i, 1);
+						break;
+					}
+				}
+				this.setState({
+					items: this.state.items,
+					auctions: []
+				})
 	},
 	
 	/*
@@ -173,10 +196,8 @@ var Dashboard = React.createClass({
 		Attepts to update the auctions data (used to render the Item Container)
 	*/
 	displayAuctions(data) {
-		console.log("displayAuctions data");
-		console.log(data);
 		var auctions = this.state.auctions;
-		var listingURLs = [];
+		//var listingURLs = [];
 		for(var i in data.findItemsByKeywordsResponse[0].searchResult[0].item)
 		{
 			var newAuction;
@@ -189,7 +210,7 @@ var Dashboard = React.createClass({
 					thumbnail: data.findItemsByKeywordsResponse[0].searchResult[0].item[i].galleryURL[0],
 					url: data.findItemsByKeywordsResponse[0].searchResult[0].item[i].viewItemURL[0]
 				}];
-				listingURLs.push(data.findItemsByKeywordsResponse[0].searchResult[0].item[i].viewItemURL[0]);
+				//listingURLs.push(data.findItemsByKeywordsResponse[0].searchResult[0].item[i].viewItemURL[0]);
 			}
 			catch(e){
 				try{
@@ -210,21 +231,28 @@ var Dashboard = React.createClass({
 			auctions = auctions.concat(newAuction);
 		}
 		
-		var unreadListingData = {
-			username: data.username,
-			itemName: data.itemName,
-			listingURLs: listingURLs
-		};
+		//To do later. Helps find auctions that the user hasn't seen yet.
+		// var unreadListingData = {
+		// 	username: data.username,
+		// 	itemName: data.itemName,
+		// 	listingURLs: listingURLs
+		// };
 		
-		$.get(
-			"unreadListings",
-			unreadListingData).done(function(data) {
-				console.log("server unread listings");
-				console.log(data);
-			}
-		);
+		// $.get(
+		// 	"unreadListings",
+		// 	unreadListingData).done(function(callbackData) {
+		// 	}
+		// );
 		
+		// $.post(
+		// 	"addListings",
+		// 	unreadListingData).done(function(callbackData) {
+		// 	}
+		// );
 		
+		if(auctions.length == 0){
+			alert("There were no auctions found for this search");
+		}
 		this.setState({
 			auctions: auctions
 		})
@@ -232,13 +260,11 @@ var Dashboard = React.createClass({
 	
 	render () {
 		
-		console.log(this.props.getUser());
-		
 		return (
 		<div>
 			<div className="container">
 				<div className="row">
-					{/* Container for the left sidebar. Includes Add Item button and Small Items */}
+					{/* Container for the left sidebar. Includes New Search button and Small Items */}
 					<AddItem 
 						masterAddItem={this.masterAddItem} 
 						requestAuctions={this.requestAuctions} 
@@ -247,7 +273,8 @@ var Dashboard = React.createClass({
 					/>
 					<div className="col-md-9">
 						{/* Container for Items in main area of Dashboard */}
-						<br/><ItemContainer auctions={this.state.auctions}/>
+						<br/>
+						{this.state.auctions.length != 0 ? <ItemContainer auctions={this.state.auctions} /> : <Instructions/>}
 					</div>
 				</div>
 			</div>

@@ -104,6 +104,7 @@ var Login = React.createClass ({
 		});
 	},
 	
+	//add a new user
 	signUp () {
 		var email = this.state.email;
 		var password = this.state.password;
@@ -112,7 +113,6 @@ var Login = React.createClass ({
 		if (!checkEmail(email))
 		{
 			this.showError("email");
-			console.log("error -- email");
 			return;
 		}
 		else {
@@ -124,14 +124,12 @@ var Login = React.createClass ({
 		if (password == "")
 		{
 			this.showError("password");
-			console.log("error -- password");
 			return;
 		}
 		
 		if (!checkPasswords(password, verify))
 		{
 			this.showError("verify");
-			console.log("error -- password");
 			return;
 		}
 		else {
@@ -181,8 +179,6 @@ var Login = React.createClass ({
 			success: function(data, err) {
 				if (err.trim() != 'success' || !data)
 				{
-					console.log(err);
-					console.log(data);
 					this.setState( {
 						isError: true,
 						error_message: "No user found"

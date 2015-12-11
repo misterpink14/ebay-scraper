@@ -14,7 +14,6 @@ var React = require('react')
 
 var Auction = React.createClass ({
 	render() {
-		console.log(this.props.url);
 		return (
 			<div className="col-sm-4 col-lg-4 col-md-4">
 				<div className="thumbnail">

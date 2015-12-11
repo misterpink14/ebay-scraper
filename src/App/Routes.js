@@ -32,8 +32,6 @@ function saveUser(newUser) {
 
 function login() {
 	isLoggedin = true;
-	console.log("login")
-	console.log(isLoggedin)
 }
 
 function logout() {

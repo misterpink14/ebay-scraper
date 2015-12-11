@@ -286,8 +286,6 @@ router.put("/item", function(req, res) {
 /* Delete Item */
 router.delete("/item", function(req, res) {
 	
-	console.log("item DELETE")
-	console.log(req.body)
 	var username = req.body.username;
 	var password = req.body.password;
 	var item = {
@@ -303,20 +301,14 @@ router.delete("/item", function(req, res) {
 			'Password': password
 		},
 		function (err, user) {
-			console.log('ERR');
-			console.log(err);
-			console.log('user');
-			console.log(user);
 			
 			if (err || !user)
 			{
-				console.log ("error")
 				res.end();
 				res.status(404).end();
 			}
 			else 
 			{
-				console.log("success")
 				// update the user's Items and save
 				for (var i = 0; i < user.Items.length; i++)
 				{
@@ -324,16 +316,12 @@ router.delete("/item", function(req, res) {
 							user.Items[i].MinPrice == item.minPrice &&
 							user.Items[i].MaxPrice == item.maxPrice )
 					{
-						console.log("found")
 						user.Items.splice(i, 1);
 						break;
 					}
 				}
 				user.save();
 				
-				console.log("dun")
-				console.log(user)
-				// OK == success
 				res.json(user);
 			}
 		}, item // pass item into the callback function
@@ -351,6 +339,7 @@ router.get('/Users', function(req, res, next) {
 
 router.get('/unreadListings',function(req, res, next) {
 	
+	console.log("unreadListings");
 	var username = req.body.username;
 	var itemName = req.body.itemName;
 	var listingURLs = req.body.listingURLs;
@@ -366,53 +355,103 @@ router.get('/unreadListings',function(req, res, next) {
 	{
 		if (err || !user)
 		{
+			console.log("error")
 			res.end();
 			res.status(404).end();
 		}
 		else 			
 		{
+			console.log("gud")
 			//items the user owns
 			var items = user.Items;
 			
+			
+			console.log("items")
+			console.log(items)
 			for (var i = 0; i < items.length; i++)
 			{
 				if (items[i].SearchWord == itemName)
 				{
 					var listings = items[i].Listings;
 					
-					for (var j = 0; j < listingURLs.length; j++)
-					{
-						var found = false;
-						
-						for (var k = 0, len = items[i].Listings; k < len; k++)
-						{
-							if (listingURLs[j] == items[i].Listings[k].ListingURL)
-							{
-								found = true;
-							}
-						}
-						
-						if (! found) 
-						{
-							unreadListings.push(listingURLs[j]);
-						}
-					}
-					
 					break;
 				}
 				
 			}
 			
-			res.json(unreadListings);
+			for (var i = 0; i < listingURLs.length; i++)
+			{
+				var found = false;
+				
+				for( var prop in listings ) {
+			        if( listings.hasOwnProperty( prop ) ) {
+			             if( listings[ prop ] === listingURLs[i] )
+			             {
+			             	found = true;
+			             }
+			        }
+			    }
+			    
+			    if (! found)
+			    {
+			    	unreadListings.push(listingURLs[i]);
+			    }
+			}
 			
-			// Listings.find({"Username": email, "Itemname": itemName, "ListingURL": listingURL}, function(err, listingMatch) 
-			// {
-	  //  		if(err)
-	  //  		{ 
-	  //  			return next(err); 
-	  //  		}
-	  //  		res.json(data);
-			// });
+			console.log(unreadListings);
+			
+			res.json(unreadListings);
 		}		
 	});
+	
+	
+});
+
+router.post("/addListings", function(req, res) {
+		
+	var username = req.body.username;
+	var itemName = req.body.itemName;
+	var listingURLs = req.body.listingURLs;
+	
+	
+	User.findOne(
+	{
+		'Username': username,
+	},
+	function (err, user) 
+	{
+		if (err || !user)
+		{
+			res.end();
+			res.status(404).end();
+		}
+		else 			
+		{
+			var item;
+			
+			for (var i = 0; i < user.Items.length; i++)
+			{
+				if (user.Items[i].SearchWord == itemName)
+				{
+					item = user.Items[i];
+					break;
+				}
+			}
+			
+				
+			for (var i = 0; i < listingURLs.length; i++)
+			{
+				var newListing = {
+					itemName: itemName,
+					listingURL: listingURLs[i]
+				}
+				
+				item.Listings.push(newListing);
+			}
+			
+			user.save();
+			res.send("OK");
+		}
+	});
+	
 });
