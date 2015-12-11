@@ -286,9 +286,16 @@ router.put("/item", function(req, res) {
 /* Delete Item */
 router.delete("/item", function(req, res) {
 	
-	var username = req.body.Username;
-	var password = req.body.Password;
-	var item = req.body.Item;
+	console.log("item DELETE")
+	console.log(req.body)
+	var username = req.body.username;
+	var password = req.body.password;
+	var item = {
+		name: req.body.name,
+		minPrice: req.body.minPrice,
+		maxPrice: req.body.maxPrice
+	}
+	console.log(item)
 	
 	User.findOne(
 		{
@@ -296,23 +303,36 @@ router.delete("/item", function(req, res) {
 			'Password': password
 		},
 		function (err, user) {
+			console.log('ERR');
+			console.log(err);
+			console.log('user');
+			console.log(user);
 			
 			if (err || !user)
 			{
+				console.log ("error")
 				res.end();
 				res.status(404).end();
 			}
 			else 
 			{
+				console.log("success")
 				// update the user's Items and save
-				user.Items.push({ 
-			        SearchWord: item.SearchWord, 
-			        MinPrice: item.MinPrice, 
-			        MaxPrice: item.MaxPrice,
-			        Listings: []
-				});
+				for (var i = 0; i < user.Items.length; i++)
+				{
+					if ( user.Items[i].SearchWord == item.name &&
+							user.Items[i].MinPrice == item.minPrice &&
+							user.Items[i].MaxPrice == item.maxPrice )
+					{
+						console.log("found")
+						user.Items.splice(i, 1);
+						break;
+					}
+				}
 				user.save();
 				
+				console.log("dun")
+				console.log(user)
 				// OK == success
 				res.json(user);
 			}

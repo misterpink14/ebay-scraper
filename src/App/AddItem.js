@@ -11,17 +11,13 @@ var React = require('react');
 
 /* The small clickable item on the left sidebar */
 var SmallItem = React.createClass({ 
-	requestAuctions () { // upon clicking, make a new ajax request for that data and repopulate the item container
-		//TODO: get searchword, minprice, and maxprice from the database to pass into requestAuctions....
+	requestAuctions() { // upon clicking, make a new ajax request for that data and repopulate the item container
 		this.props.requestAuctions(this.props.name, this.props.minPrice, this.props.maxPrice);
 	},
 	
-	editItem() {
-		console.log("Item Edited");
-	},
-	
-	deleteItem() {
-		console.log("Item Deleted");
+	deleteItem(event) {
+		event.stopPropagation();
+		this.props.deleteItem(this.props.name, this.props.minPrice, this.props.maxPrice);
 	},
 	
     render() {
@@ -29,7 +25,7 @@ var SmallItem = React.createClass({
         	<div>
             	<div className="list-group-item" onClick={this.requestAuctions}>
             		{this.props.name}
-            		<img className="x" src="http://sweetclipart.com/multisite/sweetclipart/files/x_mark_red.png" onClick={this.deleteItem}/>
+            		<div className="deleteButton" onClick={this.deleteItem}>X</div>
             		<br/>
             		From ${this.props.minPrice}  To  ${this.props.maxPrice}
             	</div>
@@ -68,11 +64,17 @@ var AddItem = React.createClass({
 		$('#maxPrice').val("");
 	},
 	
+	// deleteItem(searchWord, minPrice, maxPrice) {
+	// 	console.log("")
+	// 	this.props.deleteItem(searchWord, minPrice, maxPrice);
+	// },
+	
 	render() {
 		
 		var requestAuctions = this.props.requestAuctions;
+		var deleteItem = this.props.deleteItem;
 		var items = this.state.items.map(function(item) {
-			return <SmallItem name={item.searchWord} minPrice={item.minPrice} maxPrice={item.maxPrice} requestAuctions={requestAuctions}/>
+			return <SmallItem name={item.searchWord} minPrice={item.minPrice} maxPrice={item.maxPrice} requestAuctions={requestAuctions} deleteItem={deleteItem}/>
 		}, requestAuctions)
 		return (
 			<div className="col-md-3">

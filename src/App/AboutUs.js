@@ -28,7 +28,6 @@ var AboutUs = React.createClass({
 				<div className="aboutUsPerson">
 					<img className="profileImg" src="https://scontent-sjc2-1.xx.fbcdn.net/hphotos-prn2/v/t1.0-9/10710521_10152931809484050_7217761176826974126_n.jpg?oh=ef205b678c6cb0eeef68398ea2b78bc2&oe=56EBC9FC"/>
 					<h4>Ben Thompson</h4>
-					<p>Web Developer, Amature Mobile Developer, Student</p>
 				</div>
 					<br />
 				<div className="aboutUsPerson">

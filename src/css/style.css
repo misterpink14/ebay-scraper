@@ -21,6 +21,10 @@
     position: relative;
 }
 
+.signUpBtn {
+    box-shadow: 0px 0px 5px;
+}
+
 .loginBackgroundImage {
     background-image: url("https://images.unsplash.com/photo-1439761414027-4f4ebeeda3a3?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=969f23b9f65b9b0c1779858502a20df2");
     background-size: cover;

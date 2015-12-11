@@ -206,7 +206,7 @@ var Login = React.createClass ({
 			error: function (textStatus, errorThrown) {
 				this.setState( {
 						isError: true,
-						error_message: "No user found"
+						error_message: "Incorrect email/password"
 					});
 					return;
 			}.bind(this)
@@ -233,7 +233,7 @@ var Login = React.createClass ({
 				</div>
 				<br /><br /><br />
 				<div className="text-center orSignUp col-md-4 col-md-offset-4">
-					<input type="button" className="btn" data-toggle="modal" data-target="#sign-up-popup" value="Don't have an account? Sign up here"/>
+					<input type="button" className="btn signUpBtn" data-toggle="modal" data-target="#sign-up-popup" value="Don't have an account? Sign up here"/>
 				</div>
 				</div>
 				

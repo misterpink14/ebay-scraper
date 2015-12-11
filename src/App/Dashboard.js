@@ -119,6 +119,25 @@ var Dashboard = React.createClass({
 	},
 	
 	/*
+		Called when the user clicks the X on an item. Deletes that item.
+	*/
+	deleteItem(name, minPrice, maxPrice) {
+		var data = {
+			username: this.state.user.Username, 
+			password: this.state.user.Password, 
+			name: name, 
+			minPrice: minPrice, 
+			maxPrice: maxPrice
+		}
+		console.log(data);
+		$.ajax({
+			url: 'item',
+			method: 'DELETE', 
+			data: data
+		});
+	},
+	
+	/*
 	call to eBay API
 	*/
 	auctionRequest(searchWord, minPrice, maxPrice){ 
@@ -197,14 +216,13 @@ var Dashboard = React.createClass({
 			listingURLs: listingURLs
 		};
 		
-		// $.get(
-		// 	"unreadListings",
-		// 	unreadListingData,
-		// 	function(data) {
-		// 		console.log("server unread listings");
-		// 		console.log(data);
-		// 	}
-		// );
+		$.get(
+			"unreadListings",
+			unreadListingData).done(function(data) {
+				console.log("server unread listings");
+				console.log(data);
+			}
+		);
 		
 		
 		this.setState({
@@ -221,10 +239,15 @@ var Dashboard = React.createClass({
 			<div className="container">
 				<div className="row">
 					{/* Container for the left sidebar. Includes Add Item button and Small Items */}
-					<AddItem masterAddItem={this.masterAddItem} requestAuctions={this.requestAuctions} items={this.state.items}/>
+					<AddItem 
+						masterAddItem={this.masterAddItem} 
+						requestAuctions={this.requestAuctions} 
+						deleteItem={this.deleteItem}
+						items={this.state.items}
+					/>
 					<div className="col-md-9">
 						{/* Container for Items in main area of Dashboard */}
-						<ItemContainer auctions={this.state.auctions}/>
+						<br/><ItemContainer auctions={this.state.auctions}/>
 					</div>
 				</div>
 			</div>

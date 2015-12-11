@@ -37,6 +37,11 @@ var Item = mongoose.Schema(
             type: Boolean,
             default: false
         },
+        ExcludeAutoPay: {
+            type: Boolean,
+            default: false
+        },
+        ExpeditedShippingType: String,
         FeaturedOnly: {
             type: Boolean,
             default: false
@@ -45,6 +50,12 @@ var Item = mongoose.Schema(
             type: Boolean,
             default: false
         },
+        GetItFastOnly: {
+            type: Boolean,
+            default: false
+        },
+        ListingType: "String",
+        
         Listings: [Listing]
     }
 );
